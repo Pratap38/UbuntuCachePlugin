@@ -31,12 +31,19 @@ CACHE_CATEGORIES = [
         "name": "Logs",
         "path": "/var/log",
         "risk": "Medium"
-    }
+    },
+    
+    {
+    "name": "Thumbnail Cache",
+    "path": "~/.cache/thumbnails",
+    "risk": "Safe"
+},
 ]
 
 SAFE_DELETE_PATHS = [
 
     "~/.cache",
     "/var/cache/apt",
-    "/home/pratap/Desktop/UbuntuCacheCLeaner/tests"
+    "/home/pratap/Desktop/UbuntuCacheCLeaner/tests",
+    "~/.cache/thumbnails"
 ]
