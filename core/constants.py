@@ -40,6 +40,19 @@ CACHE_CATEGORIES = [
 },
 ]
 
+BrowserCachePaths={
+
+    "Chrome": "~/.cache/google-chrome",
+    "Edge": "~/.cache/microsoft-edge",
+    "Chromium": "~/.cache/chromium",
+
+    "Brave": "~/.cache/BraveSoftware",
+
+    "Firefox": "~/.cache/mozilla"
+}
+
+
+
 SAFE_DELETE_PATHS = [
 
     "~/.cache",

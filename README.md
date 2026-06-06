@@ -538,3 +538,30 @@ Publish on:
 GitHub
 Dev.to
 Reddit
+
+
+# Details of Day 10
+
+Today been working on the browser cache cleaner with browserClean.py in cleaner as most of the cache data that are unwanted are been stored
+
+# Some of the paths
+
+STEP 1 — Browser Cache Locations Samjho
+Google Chrome
+
+Usually:
+
+~/.cache/google-chrome
+Chromium
+~/.cache/chromium
+Brave
+~/.cache/BraveSoftware
+Firefox
+
+Firefox thoda different hai.
+
+Mostly:
+
+~/.cache/mozilla
+
+Tests -> To test it we created browsercache.pt under tests dir
