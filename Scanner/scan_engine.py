@@ -5,6 +5,7 @@ from Scanner.CacheCategory import cacheCategory
 from core.constants import CACHE_CATEGORIES
 
 
+
 ## scan karega apna folder sab
 def scanDirectory(path):
 
@@ -70,3 +71,4 @@ def scanAll():
         results.append(category)
 
     return results
+

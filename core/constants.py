@@ -38,6 +38,11 @@ CACHE_CATEGORIES = [
     "path": "~/.cache/thumbnails",
     "risk": "Safe"
 },
+{
+    "name": "Trash",
+    "path": "~/.local/share/Trash/files",
+    "risk": "Safe"
+}
 ]
 
 BrowserCachePaths={
@@ -58,5 +63,6 @@ SAFE_DELETE_PATHS = [
     "~/.cache",
     "/var/cache/apt",
     "/home/pratap/Desktop/UbuntuCacheCLeaner/tests",
-    "~/.cache/thumbnails"
+    "~/.cache/thumbnails",
+    "~/.local/share/Trash/files"
 ]

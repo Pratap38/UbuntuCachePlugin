@@ -211,7 +211,7 @@ Build temp cleaner.
 
 DAY 12
 
-Build journal log cleaner.
+Build Thrash Cleaner.
 
 DAY 13
 
@@ -565,3 +565,5 @@ Mostly:
 ~/.cache/mozilla
 
 Tests -> To test it we created browsercache.pt under tests dir
+
+# Day 13 not require because removing snap file also lead to removal of the import data 

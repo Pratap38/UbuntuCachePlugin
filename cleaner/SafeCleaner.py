@@ -1,6 +1,6 @@
 import os
 import shutil
-
+from ui.Deleteui import showDeleting
 from core.logger import logger
 from core.constants import SAFE_DELETE_PATHS
 
@@ -38,6 +38,7 @@ def DeleteFile(path):
         if not isSafePaths(path):
             logger.error(f"unsafe file delete blocked:{path}")
             return False
+        showDeleting(path)
         os.remove(path)
         logger.info(f"file Delete Succesfull:{path}")
         return True
@@ -63,6 +64,7 @@ def DeleteFolder(path):
 
             logger.error(f"Unsafe folder delete blocked: {path}")
             return False
+        showDeleting(path)
 
         shutil.rmtree(path)
 
