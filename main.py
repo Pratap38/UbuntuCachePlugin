@@ -1,49 +1,71 @@
-from Scanner.scan_engine import scanDirectory, scanAll
+# from Scanner.scan_engine import scanDirectory, scanAll
 
-import os
+# import os
 
-from core.utils import bytes_to_mb, format_size
-from core.logger import logger
-from core.permission import checkSystemAccess
-
-
+# from core.utils import bytes_to_mb, format_size
+# from core.logger import logger
+# from core.permission import checkSystemAccess
 
 
-checkSystemAccess()
-path = os.path.expanduser("~/.cache")
-
-logger.info("Application started")
 
 
-size, file = scanDirectory(path)
+# checkSystemAccess()
+# path = os.path.expanduser("~/.cache")
 
-print(f"Total Scanned Path : {path}")
-print(f"Total Files        : {file}")
-print(f"Total Size         : {bytes_to_mb(size):.2f} MB")
+# logger.info("Application started")
 
 
-results = scanAll()
+# size, file = scanDirectory(path)
 
-print("\n************ CACHE ANALYSIS *************\n")
+# print(f"Total Scanned Path : {path}")
+# print(f"Total Files        : {file}")
+# print(f"Total Size         : {bytes_to_mb(size):.2f} MB")
 
-totalSize = 0
-totalFile = 0
 
-for category in results:
+# results = scanAll()
 
-    totalSize += category.size
-    totalFile += category.files
+# print("\n************ CACHE ANALYSIS *************\n")
 
-    print(f"Category     : {category.name}")
-    print(f"Path         : {category.path}")
-    print(f"Risk Level   : {category.riskLevel}")
-    print(f"Files        : {category.files}")
-    print(f"Size         : {format_size(category.size)}")
+# totalSize = 0
+# totalFile = 0
+
+# for category in results:
+
+#     totalSize += category.size
+#     totalFile += category.files
+
+#     print(f"Category     : {category.name}")
+#     print(f"Path         : {category.path}")
+#     print(f"Risk Level   : {category.riskLevel}")
+#     print(f"Files        : {category.files}")
+#     print(f"Size         : {format_size(category.size)}")
 
     
 
 
-print("\n************ FINAL SUMMARY *************\n")
+# print("\n************ FINAL SUMMARY *************\n")
 
-print(f"Total Files  : {totalFile}")
-print(f"Total Size   : {format_size(totalSize)}")
+# print(f"Total Files  : {totalFile}")
+# print(f"Total Size   : {format_size(totalSize)}")
+
+
+#updated new one
+
+from core.logger import logger
+from core.permission import checkSystemAccess
+
+from ui.app import runAll
+
+
+def main():
+
+    logger.info("Application Started")
+
+    checkSystemAccess()
+
+    runAll()
+
+
+if __name__ == "__main__":
+
+    main()

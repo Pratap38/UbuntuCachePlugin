@@ -567,3 +567,93 @@ Mostly:
 Tests -> To test it we created browsercache.pt under tests dir
 
 # Day 13 not require because removing snap file also lead to removal of the import data 
+# Day 21 Today nothing just feeling bore so according to documentation i will just all the complete workflow and then end
+created an new file ui/app.py to run all the combination created
+
+# Day 22 Threads ,Queue
+what is threading ? why in this project use
+The term threading refers to making multiple worker to work on diffrent different task in order to acchevie or complete
+the goal fastly known as threading
+As in our project we have Scanner use to scan  then wait until first work is done
+so to minimise we use threading concept
+
+
+Abhi tumhara scanner kaise kaam karta hai?
+
+for data in CACHE_CATEGORIES:
+
+    scanDirectory(data["path"])
+
+Flow:
+
+User Cache
+    ↓
+APT Cache
+    ↓
+Temp Files
+    ↓
+Logs
+    ↓
+Thumbnail
+    ↓
+Trash
+
+Ek ke baad ek.
+
+Problem
+
+Suppose:
+
+User Cache = 5 sec
+APT Cache = 2 sec
+Logs = 3 sec
+
+Total:
+
+10 sec
+
+Wait.
+
+Modern CPUs
+
+Tumhare system me likely:
+
+4 Core
+8 Thread
+
+ya usse zyada.
+
+Abhi:
+
+1 Thread use kar rahe ho
+
+Baaki CPU:
+
+Idle 😴
+Parallel Scanning Concept
+
+Instead of:
+
+User Cache
+↓
+APT
+↓
+Logs
+
+Run:
+
+User Cache  ─┐
+APT Cache   ─┼── Same Time
+Logs        ─┤
+Temp        ─┘
+Expected Benefit
+
+Current:
+
+Scan Time = 10 sec
+
+After:
+
+Scan Time = 2-4 sec
+
+Depending on disk.

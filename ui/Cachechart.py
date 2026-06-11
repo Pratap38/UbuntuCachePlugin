@@ -32,4 +32,4 @@ def showCacheChart(results):
             bar,
             format_size(category.size)
         )
-        console.print(table)
+    console.print(table)
