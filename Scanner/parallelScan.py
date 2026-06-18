@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 from Scanner.scan_engine import scanDirectory
 from Scanner.CacheCategory import cacheCategory
 from core.constants import CACHE_CATEGORIES
+import os
 
 
 def scanCategory(data):
@@ -26,9 +27,12 @@ def scanCategory(data):
 def ParallelScan():
 
     results = []
-
+    max_workers = min(
+        len(CACHE_CATEGORIES),
+        os.cpu_count() or 1
+    )
     with ThreadPoolExecutor(
-        max_workers=4
+        max_workers=max_workers
     ) as executor:
 
         futures = []

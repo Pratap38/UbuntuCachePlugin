@@ -2,7 +2,7 @@ import os
 import shutil
 from ui.Deleteui import showDeleting
 from core.logger import logger
-from core.constants import SAFE_DELETE_PATHS
+from core.constants import Expanded_SafePaths
 
 def isSafePaths(path):
 
@@ -10,7 +10,7 @@ def isSafePaths(path):
         os.path.expanduser(path)
     )
 
-    for safePath in SAFE_DELETE_PATHS:
+    for safePath in Expanded_SafePaths:
 
         expandSafePath = os.path.abspath(
             os.path.expanduser(safePath)

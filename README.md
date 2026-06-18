@@ -657,3 +657,8 @@ After:
 Scan Time = 2-4 sec
 
 Depending on disk.
+![alt text](image-1.png)
+
+# Optimisation Speed Score 
+
+![BenchMarkScore](image.png)

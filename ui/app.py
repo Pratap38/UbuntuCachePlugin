@@ -6,9 +6,10 @@ from ui.Dashboard import (
 from ui.Cachechart import showCacheChart
 from cleaner.Completecleaner import  cleanAll
 from Scanner.parallelScan import ParallelScan
+from Scanner.AsyncScan import runAsyncscan
 def runAll():
     showHeader()
-    result=ParallelScan()
+    result=runAsyncscan()
     showTable(result)
     showCacheChart(result)
     cleanAll()

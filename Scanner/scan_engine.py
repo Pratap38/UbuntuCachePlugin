@@ -26,10 +26,9 @@ def scanDirectory(path):
 
                 try:
 
-                    if os.path.exists(filePath):
 
-                        totalSize += os.path.getsize(filePath)
-                        totalFiles += 1
+                    totalSize += os.path.getsize(filePath)
+                    totalFiles += 1
 
                 except PermissionError:
 

@@ -6,7 +6,7 @@
 # }
 
 
-
+import os 
 CACHE_CATEGORIES = [
 
     {
@@ -65,4 +65,13 @@ SAFE_DELETE_PATHS = [
     "/home/pratap/Desktop/UbuntuCacheCLeaner/tests",
     "~/.cache/thumbnails",
     "~/.local/share/Trash/files"
+]
+
+Expanded_SafePaths=[
+    
+    os.path.abspath(
+        os.path.expanduser(path)
+    )
+
+    for path in SAFE_DELETE_PATHS
 ]
