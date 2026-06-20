@@ -63,8 +63,10 @@ SAFE_DELETE_PATHS = [
     "~/.cache",
     "/var/cache/apt",
     "/home/pratap/Desktop/UbuntuCacheCLeaner/tests",
+    "/home/pratap/Desktop/UbuntuCacheCLeaner/stress_test",
     "~/.cache/thumbnails",
-    "~/.local/share/Trash/files"
+    "~/.local/share/Trash/files",
+    "stress_delete"
 ]
 
 Expanded_SafePaths=[

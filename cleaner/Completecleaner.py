@@ -27,7 +27,7 @@ from cleaner.BrowserClean import cleanBrowserCache
 from cleaner.ThrashCleaner import cleanThrash
 
 from ui.Finalreport import showFinalreport
-
+from core.Errorrecover import recoverymanager
 import core.report as reportData
 
 
@@ -66,6 +66,7 @@ def cleanAll():
     reportData.afterScanSize = totalAfter
 
     showFinalreport()
+    recoverymanager.TotalsummaryReport()
 
     return True
 
