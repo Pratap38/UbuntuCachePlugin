@@ -1,13 +1,11 @@
 from textual.app import App
-
 from textual.widgets import Header
 from textual.widgets import Footer
-
 from textual.widgets import Checkbox
-
 from textual.widgets import Button
-
 from textual.containers import Vertical
+
+from ui.CleanScreen import CleaningScreen
 
 
 class CacheSelectionScreen(App):
@@ -16,26 +14,26 @@ class CacheSelectionScreen(App):
 
     Screen {
 
-        align:center middle;
+        align: center middle;
 
     }
 
     Vertical {
 
-        width:60;
-        height:auto;
+        width: 60;
+        height: auto;
 
     }
 
     Checkbox {
 
-        margin:1;
+        margin: 1;
 
     }
 
     Button {
 
-        margin-top:2;
+        margin-top: 2;
 
     }
 
@@ -92,78 +90,77 @@ class CacheSelectionScreen(App):
 
         yield Footer()
 
-    def on_button_pressed(
-        self,
-        event
-    ):
+    def on_button_pressed(self, event):
 
-        if event.button.id == "start":
+        if event.button.id != "start":
 
-            selectedCaches = []
+            return
 
-            if self.query_one(
-                "#user_cache",
-                Checkbox
-            ).value:
+        selectedCaches = []
 
-                selectedCaches.append(
-                    "User Cache"
-                )
+        if self.query_one(
+            "#user_cache",
+            Checkbox
+        ).value:
 
-            if self.query_one(
-                "#apt_cache",
-                Checkbox
-            ).value:
-
-                selectedCaches.append(
-                    "APT Cache"
-                )
-
-            if self.query_one(
-                "#temp_files",
-                Checkbox
-            ).value:
-
-                selectedCaches.append(
-                    "Temp Files"
-                )
-
-            if self.query_one(
-                "#thumbnail",
-                Checkbox
-            ).value:
-
-                selectedCaches.append(
-                    "Thumbnail Cache"
-                )
-
-            if self.query_one(
-                "#browser",
-                Checkbox
-            ).value:
-
-                selectedCaches.append(
-                    "Browser Cache"
-                )
-
-            if self.query_one(
-                "#trash",
-                Checkbox
-            ).value:
-
-                selectedCaches.append(
-                    "Trash"
-                )
-
-            self.notify(
-                f"Selected: {len(selectedCaches)} Categories"
+            selectedCaches.append(
+                "User Cache"
             )
 
-            print("\nSelected Caches:\n")
+        if self.query_one(
+            "#apt_cache",
+            Checkbox
+        ).value:
 
-            for item in selectedCaches:
+            selectedCaches.append(
+                "APT Cache"
+            )
 
-                print(item)
+        if self.query_one(
+            "#temp_files",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Temp Files"
+            )
+
+        if self.query_one(
+            "#thumbnail",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Thumbnail Cache"
+            )
+
+        if self.query_one(
+            "#browser",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Browser Cache"
+            )
+
+        if self.query_one(
+            "#trash",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Trash"
+            )
+
+        self.push_screen(
+
+            CleaningScreen(
+
+                selectedCaches
+
+            )
+
+        )
 
 
 if __name__ == "__main__":
