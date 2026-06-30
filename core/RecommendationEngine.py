@@ -7,6 +7,32 @@ class RecommendationEngine:
 
         self.recommendations = []
 
+    def addRecommendation(
+
+        self,
+
+        title,
+
+        level,
+
+        message
+
+    ):
+
+        self.recommendations.append(
+
+            {
+
+                "title": title,
+
+                "level": level,
+
+                "message": message
+
+            }
+
+        )
+
     def analyze(self, results):
 
         self.recommendations.clear()
@@ -14,7 +40,9 @@ class RecommendationEngine:
         for category in results:
 
             sizeMB = bytes_to_mb(
+
                 category.size
+
             )
 
             if category.name == "User Cache":
@@ -47,15 +75,23 @@ class RecommendationEngine:
 
         if size > 2048:
 
-            self.recommendations.append(
+            self.addRecommendation(
 
-                "Large User Cache detected. Cleaning recommended."
+                "User Cache",
+
+                "Critical",
+
+                "Large User Cache detected. Cleaning strongly recommended."
 
             )
 
         elif size > 1024:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "User Cache",
+
+                "Warning",
 
                 "User Cache is moderately large."
 
@@ -65,7 +101,11 @@ class RecommendationEngine:
 
         if size > 300:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "APT Cache",
+
+                "Warning",
 
                 "APT Cache is consuming significant storage."
 
@@ -75,7 +115,11 @@ class RecommendationEngine:
 
         if size > 500:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "Browser Cache",
+
+                "Warning",
 
                 "Browser Cache unusually large."
 
@@ -85,7 +129,11 @@ class RecommendationEngine:
 
         if size < 10:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "Thumbnail Cache",
+
+                "Info",
 
                 "Thumbnail Cache already optimized."
 
@@ -95,7 +143,11 @@ class RecommendationEngine:
 
         if size > 100:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "Temp Files",
+
+                "Warning",
 
                 "Temporary files can be safely removed."
 
@@ -105,7 +157,11 @@ class RecommendationEngine:
 
         if files == 0:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "Trash",
+
+                "Info",
 
                 "Trash is already empty."
 
@@ -113,7 +169,11 @@ class RecommendationEngine:
 
         else:
 
-            self.recommendations.append(
+            self.addRecommendation(
+
+                "Trash",
+
+                "Warning",
 
                 f"Trash contains {files} files."
 

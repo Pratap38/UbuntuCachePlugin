@@ -1,6 +1,6 @@
 from Scanner.parallelScan import ParallelScan
 
-from core. RecommendationEngine import RecommendationEngine
+from core.RecommendationEngine import RecommendationEngine
 
 
 results = ParallelScan()
@@ -8,17 +8,23 @@ results = ParallelScan()
 engine = RecommendationEngine()
 
 recommendations = engine.analyze(
+
     results
+
 )
 
 print("\nRecommendations\n")
 
-for recommendation in recommendations:
+for item in recommendations:
 
     print(
 
-        "✓",
+        f"[{item['level']}]",
 
-        recommendation
+        item["title"],
+
+        ":",
+
+        item["message"]
 
     )

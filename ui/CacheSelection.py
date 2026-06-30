@@ -3,9 +3,11 @@ from textual.widgets import Header
 from textual.widgets import Footer
 from textual.widgets import Checkbox
 from textual.widgets import Button
+from textual.widgets import Select
 from textual.containers import Vertical
 
 from ui.CleanScreen import CleaningScreen
+from core.CleaningPreset import CleaningPreset
 
 
 class CacheSelectionScreen(App):
@@ -22,6 +24,12 @@ class CacheSelectionScreen(App):
 
         width: 60;
         height: auto;
+
+    }
+
+    Select {
+
+        margin-bottom: 1;
 
     }
 
@@ -44,6 +52,22 @@ class CacheSelectionScreen(App):
         yield Header()
 
         yield Vertical(
+
+            Select(
+
+                [
+
+                    (preset, preset)
+
+                    for preset in CleaningPreset.allPreset()
+
+                ],
+
+                prompt="Select Cleaning Preset",
+
+                id="preset"
+
+            ),
 
             Checkbox(
                 "User Cache",
@@ -89,6 +113,68 @@ class CacheSelectionScreen(App):
         )
 
         yield Footer()
+
+    def on_select_changed(self, event):
+
+        if event.select.id != "preset":
+
+            return
+
+        preset = event.value
+
+        selectedCaches = CleaningPreset.getPreset(
+
+            preset
+
+        )
+
+        self.query_one(
+
+            "#user_cache",
+
+            Checkbox
+
+        ).value = "User Cache" in selectedCaches
+
+        self.query_one(
+
+            "#apt_cache",
+
+            Checkbox
+
+        ).value = "APT Cache" in selectedCaches
+
+        self.query_one(
+
+            "#temp_files",
+
+            Checkbox
+
+        ).value = "Temp Files" in selectedCaches
+
+        self.query_one(
+
+            "#thumbnail",
+
+            Checkbox
+
+        ).value = "Thumbnail Cache" in selectedCaches
+
+        self.query_one(
+
+            "#browser",
+
+            Checkbox
+
+        ).value = "Browser Cache" in selectedCaches
+
+        self.query_one(
+
+            "#trash",
+
+            Checkbox
+
+        ).value = "Trash" in selectedCaches
 
     def on_button_pressed(self, event):
 
