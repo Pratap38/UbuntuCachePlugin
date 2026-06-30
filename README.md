@@ -36,6 +36,34 @@ The goal is to build a production-ready Ubuntu terminal application that:
 | Packaging | PyInstaller, pip packaging |
 | Testing | pytest |
 
+## 📊 Architecture
+
+```
+                 Ubuntu Cache Cleaner
+
+                     Config Manager
+                           │
+                           ▼
+                    Scanner Engine
+                           │
+        ┌──────────────────┼──────────────────┐
+        ▼                  ▼                  ▼
+ Recommendation     Auto Detection     Cleanup Estimator
+        │                  │                  │
+        └──────────────┬───┴──────────────────┘
+                       ▼
+                 Textual Interface
+                       │
+                       ▼
+               Cleaning Presets
+                       │
+                       ▼
+                Cleaning Engine
+                       │
+                       ▼
+                 Final Report
+```
+
 ## Roadmap
 
 Planned future enhancements:
