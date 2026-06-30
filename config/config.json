@@ -1,0 +1,7 @@
+{
+    "defaultPreset": "Safe Clean",
+    "showRecommendation": true,
+    "showAutoDetection": true,
+    "maxThreads": 8,
+    "autoClean": false
+}
