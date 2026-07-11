@@ -1,692 +1,416 @@
 # Ubuntu Cache Cleaner
 
-Ubuntu Cache Cleaner is a terminal-based utility designed to help Ubuntu users understand, analyze, and safely clean cache and temporary system data.
+<p align="center">
+  <img src="image-1.png" alt="Ubuntu Cache Cleaner banner" width="960">
+</p>
 
-It is built with a strong focus on clarity and usability for beginners, while still providing a structured and reliable workflow suitable for production-level use.
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.12+">
+  <img src="https://img.shields.io/badge/textual-TUI-111111?style=for-the-badge" alt="Textual TUI">
+  <img src="https://img.shields.io/badge/rich-terminal_UI-0080FF?style=for-the-badge" alt="Rich terminal UI">
+  <img src="https://img.shields.io/badge/status-active-2E7D32?style=for-the-badge" alt="Project status">
+  <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=for-the-badge" alt="License">
+</p>
 
-## Why This Project Exists
+<p align="center">
+  <strong>A polished terminal app for scanning Ubuntu cache, guiding safe cleanup, and generating clear reports.</strong>
+</p>
 
-Many new Ubuntu users even I when i was new to Ubuntu face storage issues caused by accumulated package cache (`apt`, `.deb`, and related temporary files).  
-Although commands such as `apt clean` are available, they do not always provide:
+<p align="center">
+  Fast. Safe. Explainable.
+</p>
 
-- clear visibility into what is consuming space
-- confidence about what is safe to remove
-- an interactive experience that helps users learn the system
+---
 
-This project addresses that gap with an interactive terminal experience, including visual feedback and guided cleaning actions.
+## Overview
 
-## Project Goals
+Ubuntu Cache Cleaner is a Python terminal application for Ubuntu systems that helps users inspect cache usage, understand cleanup risk, and run guided removal workflows through a modern TUI.
 
-The goal is to build a production-ready Ubuntu terminal application that:
+It blends:
 
-- scans cache and temporary files intelligently
-- visualizes disk and cache usage in the terminal
-- performs safe cleanup operations
-- provides real-time status and feedback
-- remains beginner-friendly and reliable
+- category-based cache scanning
+- safety-first cleanup modules
+- recommendation and auto-detection logic
+- recovery and logging support
+- Textual and Rich-powered interfaces
 
-## Technology Stack
+## Why It Exists
 
-| Area | Tools |
+Cache cleanup is often simple in theory and confusing in practice.
+
+This project exists to make the process:
+
+- visible
+- explainable
+- recoverable
+- beginner-friendly
+- useful for daily maintenance
+
+The goal is to reduce guesswork without taking away control.
+
+## Highlights
+
+| Area | What You Get |
 | --- | --- |
-| Core Language | Python 3.12+ |
-| Terminal UI | Rich |
-| Charts | Plotext |
-| System Access | `psutil`, `os`, `pathlib`, `shutil`, `subprocess` |
-| Packaging | PyInstaller, pip packaging |
-| Testing | pytest |
+| Scanning | Detects and analyzes cache categories |
+| Cleaning | Uses focused cleaner modules for specific targets |
+| UI | A guided terminal interface built with Textual |
+| Safety | Permission checks and safer delete workflows |
+| Insight | Recommendation and auto-detection support |
+| Reliability | Logging, recovery, and reporting helpers |
 
-## 📊 Architecture
+## Key Features
 
+- Scans Ubuntu cache and temporary storage categories
+- Supports multiple cleaner modules for different cache sources
+- Uses a terminal UI for interactive workflows
+- Shows cleaning summaries and final reports
+- Includes recommendation and auto-detection engines
+- Tracks recovery and crash-related logs
+- Uses permission checks before sensitive operations
+- Provides a modular codebase for future expansion
+
+## Screenshots
+
+Add visuals here when available:
+
+- `docs/assets/screenshots/dashboard.png`
+- `docs/assets/screenshots/scan-results.png`
+- `docs/assets/screenshots/report.png`
+
+## GIFs
+
+Add walkthroughs here when available:
+
+- `docs/assets/gifs/scan-demo.gif`
+- `docs/assets/gifs/cleanup-flow.gif`
+
+## Architecture
+
+```text
+                         Ubuntu Cache Cleaner
+                                  |
+           -------------------------------------------------
+           |                |               |               |
+      Scanner Engine   Cleaner Engine   Safety Layer   TUI Screens
+           |                |               |               |
+           -------------------------------------------------
+                                  |
+                           Final Report
 ```
-                 Ubuntu Cache Cleaner
 
-                     Config Manager
-                           │
-                           ▼
-                    Scanner Engine
-                           │
-        ┌──────────────────┼──────────────────┐
-        ▼                  ▼                  ▼
- Recommendation     Auto Detection     Cleanup Estimator
-        │                  │                  │
-        └──────────────┬───┴──────────────────┘
-                       ▼
-                 Textual Interface
-                       │
-                       ▼
-               Cleaning Presets
-                       │
-                       ▼
-                Cleaning Engine
-                       │
-                       ▼
-                 Final Report
+## Workflow
+
+```text
+Start
+  |
+  v
+Check permissions
+  |
+  v
+Scan cache categories
+  |
+  v
+Analyze risk and recommendations
+  |
+  v
+Choose cleaning preset
+  |
+  v
+Run safe cleanup
+  |
+  v
+Generate final report
 ```
 
-## Roadmap
+## Project Structure
 
-Planned future enhancements:
+```text
+.
+|-- main.py
+|-- cli/
+|-- core/
+|-- cleaner/
+|-- Scanner/
+|-- ui/
+|-- tests/
+|-- config/
+|-- install.sh
+|-- uninstall.sh
+|-- setup.py
+`-- requirements.txt
+```
 
-- Textual-based advanced UI mode
-- recommendation engine for cleanup actions
-- scheduled automatic cleanup support
+### Main Modules
 
-DAY 1 — Project Setup + Git + Environment
-Setup
+- `main.py` starts the application
+- `cli/cacheclean.py` exposes the command-line entry point
+- `ui/` contains the Textual-based screens and widgets
+- `Scanner/` contains scan logic and scan orchestration
+- `cleaner/` contains cleanup implementations
+- `core/` contains configuration, logging, detection, permissions, and reporting helpers
 
-Install:
+## Installation
 
-sudo apt update
-sudo apt install python3-pip git
+### Requirements
 
-Create project:
+- Ubuntu or another Linux distribution
+- Python 3.12 or newer
+- `pip`
+- `venv` recommended
 
-mkdir ubuntu-cache-cleaner
-cd ubuntu-cache-cleaner
+### From Source
 
-Setup Git:
-
-git init
-
-Create:
-
-.gitignore
-README.md
-requirements.txt
-
-Setup venv:
-
+```bash
+git clone <repo-url>
+cd UbuntuCacheCLeaner
 python3 -m venv venv
 source venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+```
 
-Install initial libraries:
+### Using the Installer Script
 
-pip install rich textual psutil plotext pyfiglet pytest
+```bash
+bash install.sh
+```
 
-Commit:
+## Quick Start
 
-git add .
-git commit -m "Initial project setup"
-DAY 2 — Linux Filesystem + First Real Scanner
+```bash
+source venv/bin/activate
+cacheclean
+```
 
-Learn ONLY what matters:
+Or run the entry script directly:
 
-/tmp
-/var/cache
-~/.cache
-/var/log
+```bash
+python3 main.py
+```
 
-Build:
+## CLI Usage
 
-scan_directory(path)
+The installed command is:
 
-Features:
+```bash
+cacheclean
+```
 
-recursive scan
-file counting
-size calculation
-error handling
+This opens the interactive terminal application.
 
-Output:
+## Interactive TUI Usage
 
-Cache path
-Size
-File count
-DAY 3 — Modular Architecture + Logging System
+The app is organized around a guided terminal flow:
 
-Create full project structure.
+- dashboard and navigation screens
+- cache category selection
+- live or staged scanning
+- progress indicators
+- report generation
+- cleaner actions with safety checks
 
-Build:
+## Configuration
 
-logger.py
-constants.py
-utils.py
+Configuration lives in:
 
-Setup:
+```text
+config/config.json
+```
 
-file logging
-error logging
-debug logging
+Typical options include:
 
-Log:
+- recommendation visibility
+- auto-detection visibility
+- cleanup behavior toggles
+- report display preferences
 
-permission failures
-deleted files
-skipped files
+## Cleaning Presets
 
-This is CRITICAL for system tools.
+Presets help users choose the right level of cleanup without manually selecting every category.
 
-DAY 4 — Build Multi-Category Scanner
+Expected preset styles:
 
-Add scanners for:
+- safe cleanup
+- balanced cleanup
+- aggressive cleanup
 
-APT cache
-user cache
-thumbnails
-browser cache
-temp files
+## Safety Features
 
-Return structured objects.
+Ubuntu Cache Cleaner is built with safety in mind:
 
-DAY 5 — Permission System FIRST
+- permission checks before sensitive actions
+- cleaner separation by cache type
+- structured reporting
+- error handling around scanner and recommendation workflows
+- recovery logging support
 
-This fixes the biggest flaw from previous roadmap.
+## Recommendation Engine
 
-Build:
+The recommendation engine helps explain scan output and suggests next actions based on detected cache categories and system state.
 
-permission_manager.py
+## Auto Detection
 
-Handle:
+Auto-detection surfaces warnings and useful system observations during reporting, so users can see potential issues without digging through raw output.
 
-sudo detection
-permission checks
-graceful failures
-protected paths
+## Crash Recovery
 
-Learn:
+The project includes crash and recovery helpers so failures can be logged and analyzed instead of disappearing silently.
 
-os.geteuid()
+## Recovery Logs
 
-Test:
+Recovery logging is intended to support:
 
-privileged vs non-privileged paths
-DAY 6 — Safe Delete Engine
+- post-failure diagnosis
+- cleanup session traceability
+- debugging permission and deletion issues
 
-Build:
+## Performance
 
-safe_delete()
+The project favors practical terminal performance:
 
-Rules:
+- modular scanning
+- lightweight text UI rendering
+- targeted cleanup operations
+- small dependency footprint
 
-validate path
-prevent dangerous deletes
-skip symlinks
-recover from failures
+## Threading
 
-NEVER use blind deletion.
+If concurrency is expanded later, it should stay focused on safe parallel work and avoid overlapping deletion on the same paths.
 
-DAY 7 — Testing + Refactor Day
+## Rich UI
 
-Test:
+Rich is used for polished terminal rendering, readable output, and visually clear status information.
 
-all scanners
-permissions
-delete safety
+## Textual UI
 
-Refactor messy code.
+Textual powers the interactive screen flow and gives the app a modern terminal experience.
 
-WEEK 2 — CORE CLEANING ENGINE
-GOAL
+## Development Guide
 
-Actual cleanup logic.
+For local development:
 
-DAY 8
+```bash
+source venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+python3 main.py
+```
 
-Build APT cleaner.
+## Testing
 
-DAY 9
+Run the available tests with:
 
-Build thumbnail cleaner.
+```bash
+pytest
+```
 
-DAY 10
+You can also target specific checks when iterating on a module.
 
-Build browser cache cleaner.
+## Build Executable
 
-DAY 11
-
-Build temp cleaner.
-
-DAY 12
-
-Build Thrash Cleaner.
-
-DAY 13
-
-Build snap cache cleaner.
-
-DAY 14 — Integration Test
-
-Test ALL cleaners together.
-
-This is where most bugs appear.
-
-WEEK 3 — TERMINAL VISUAL SYSTEM
-GOAL
-
-Transform backend into professional terminal application.
-
-DAY 15 — Rich Dashboard Basics
-
-Build:
-
-panels
-tables
-layouts
-color themes
-DAY 16 — Animated Scanning Screen
-
-Build:
-
-spinners
-live updating status
-real-time scan display
-DAY 17 — Progress Bar System
-
-Build:
-
-category progress
-overall progress
-percentage tracking
-DAY 18 — Live File Deletion Feed
-
-Display:
-
-Deleting: file.tmp
-
-in real-time.
-
-DAY 19 — Charts & Visualizations
-
-Build:
-
-bar charts
-cache breakdown
-percentages
-
-Use:
-
-plotext
-DAY 20 — Final Report Screen
-
-Build:
-
-before vs after
-total space freed
-time taken
-DAY 21 — Full UI Integration Test
-
-FIRST polished working prototype.
-
-WEEK 4 — PERFORMANCE + THREADING
-GOAL
-
-Prevent future rewrites.
-
-This was missing previously.
-
-DAY 22 — Learn Python Threading
-
-Understand:
-
-threading
-queues
-worker threads
-
-Only what is necessary.
-
-DAY 23 — Parallel Scanning Engine
-
-Convert scanners into:
-
-multi-threaded scanning
-
-Huge speed improvement.
-
-DAY 24 — Async UI Updates
-
-Prevent:
-
-frozen terminal
-laggy progress bars
-DAY 25 — Performance Optimization
-
-Optimize:
-
-large folder scans
-repeated path checks
-memory usage
-DAY 26 — Benchmarking
-
-Test:
-
-scan speed
-deletion speed
-UI responsiveness
-DAY 27 — Error Recovery System
-
-Recover from:
-
-locked files
-permission errors
-interrupted cleaning
-DAY 28 — Stability Testing
-
-Stress test on:
-
-huge cache directories
-thousands of files
-WEEK 5 — TEXTUAL INTERACTIVE TUI
-GOAL
-
-Professional interactive terminal app.
-
-This is where Textual SHOULD enter.
-
-DAY 29 — Learn Textual Basics
-
-Understand:
-
-screens
-widgets
-containers
-events
-DAY 30 — Build Interactive Menu
-
-Replace static prompts with:
-
-keyboard navigation
-selectable items
-checkbox UI
-DAY 31 — Build Cache Selection Screen
-
-Interactive:
-
-[✓] Browser Cache
-DAY 32 — Build Confirmation Modal
-
-Interactive popup confirmation.
-
-DAY 33 — Build Risk Warning System
-
-Color-coded:
-
-safe
-warning
-dangerous
-DAY 34 — Build Responsive Layouts
-
-Support:
-
-small terminal
-fullscreen terminal
-DAY 35 — TUI Integration Testing
-
-Test:
-
-keyboard behavior
-resize behavior
-navigation
-WEEK 6 — ADVANCED FEATURES
-GOAL
-
-Make it premium-quality.
-
-DAY 36
-
-Build cleaning history system.
-
-DAY 37
-
-Build report generation.
-
-Save:
-
-reports/
-DAY 38
-
-Build recommendation engine.
+This project can be packaged into a standalone executable with tools such as PyInstaller.
 
 Example:
 
-Chrome cache unusually large
-DAY 39
+```bash
+pyinstaller --onefile main.py
+```
 
-Build auto-detection:
+## Packaging
 
-low disk space
-huge cache growth
-DAY 40
+The project includes a `setup.py` and console script entry point:
 
-Build cleaning presets:
+```text
+cacheclean=cli.cacheclean:main
+```
 
-Safe Clean
-Deep Clean
-Browser Only
-DAY 41
+Install locally in editable mode during development:
 
-Build cleanup estimation system.
+```bash
+pip install -e .
+```
 
-DAY 42
+## Installing with pip
 
-Build config file support.
+```bash
+pip install .
+```
 
-WEEK 7 — PACKAGING + DISTRIBUTION
-GOAL
+Or install from a built distribution artifact if one is published later.
 
-Make it installable.
+## Installing the Executable
 
-DAY 43
+If you distribute a compiled binary, place it somewhere in your `PATH`, or install it using your preferred packaging workflow.
 
-Build CLI command:
+## Uninstall
 
-cacheclean
-DAY 44
+If installed in editable mode:
 
-Package using:
+```bash
+pip uninstall Baker
+```
 
-setuptools
-PyInstaller
-DAY 45
+If installed from a system package or executable bundle, remove it using the matching install method.
 
-Create install script.
+## Troubleshooting
 
-DAY 46
+- Make sure the virtual environment is activated before launching the app
+- Confirm your user has permission to inspect the relevant cache paths
+- If a screen fails to load, check terminal size and installed dependencies
+- Review logs when cleanup or recovery behavior does not match expectations
 
-Create uninstall script.
+## FAQ
 
-DAY 47
+### Is it safe to use?
 
-Cross-version Ubuntu testing:
+The project is designed around guided cache cleanup. Review the selected categories before deleting anything.
 
-20.04
-22.04
-24.04
-DAY 48
+### Does it delete personal files?
 
-Handle distro edge cases.
+It is intended to target cache and temporary data, not personal documents. Always verify selected paths before cleanup.
 
-DAY 49
+### Can I extend it?
 
-Create:
+Yes. The codebase is modular and meant to grow with new scanners, cleaner modules, and UI screens.
 
-crash logs
-recovery logs
-WEEK 8 — POLISH + OPEN SOURCE RELEASE
-GOAL
+## Security
 
-Portfolio + production readiness.
+System cleanup tools should be treated carefully.
 
-DAY 50
+- validate paths before deleting
+- keep permission checks in place
+- log failures and skipped items
+- avoid unsafe recursive deletion patterns
 
-UI polish:
+## Roadmap
 
-spacing
-typography
-alignment
-DAY 51
+Planned areas for future improvement:
 
-Animation polish.
+- more refined cleaning presets
+- expanded scanning coverage
+- richer report visuals
+- stronger recovery tooling
+- packaging and distribution polish
 
-DAY 52
+## Contributing
 
-Optimize startup speed.
+Contributions are welcome.
 
-DAY 53
+Suggested workflow:
 
-Optimize terminal rendering performance.
+1. Fork the repository
+2. Create a feature branch
+3. Make focused changes
+4. Add or update tests
+5. Open a pull request with a clear description
 
-DAY 54
+## License
 
-Add branding:
+Add the project license here, or link to the repository license file when available.
 
-logo
-ASCII banner
-identity
-DAY 55
+## Credits
 
-Create screenshots.
+Built by Pratap and contributors.
 
-DAY 56
-
-Create demo video.
-
-DAY 57
-
-Write professional README.
-
-Include:
-
-screenshots
-architecture
-install guide
-features
-DAY 58
-
-Final bug fixing.
-
-DAY 59
-
-Final full-system testing marathon.
-
-DAY 60 — RELEASE
-
-Publish on:
-
-GitHub
-Dev.to
-Reddit
-
-
-# Details of Day 10
-
-Today been working on the browser cache cleaner with browserClean.py in cleaner as most of the cache data that are unwanted are been stored
-
-# Some of the paths
-
-STEP 1 — Browser Cache Locations Samjho
-Google Chrome
-
-Usually:
-
-~/.cache/google-chrome
-Chromium
-~/.cache/chromium
-Brave
-~/.cache/BraveSoftware
-Firefox
-
-Firefox thoda different hai.
-
-Mostly:
-
-~/.cache/mozilla
-
-Tests -> To test it we created browsercache.pt under tests dir
-
-# Day 13 not require because removing snap file also lead to removal of the import data 
-# Day 21 Today nothing just feeling bore so according to documentation i will just all the complete workflow and then end
-created an new file ui/app.py to run all the combination created
-
-# Day 22 Threads ,Queue
-what is threading ? why in this project use
-The term threading refers to making multiple worker to work on diffrent different task in order to acchevie or complete
-the goal fastly known as threading
-As in our project we have Scanner use to scan  then wait until first work is done
-so to minimise we use threading concept
-
-
-Abhi tumhara scanner kaise kaam karta hai?
-
-for data in CACHE_CATEGORIES:
-
-    scanDirectory(data["path"])
-
-Flow:
-
-User Cache
-    ↓
-APT Cache
-    ↓
-Temp Files
-    ↓
-Logs
-    ↓
-Thumbnail
-    ↓
-Trash
-
-Ek ke baad ek.
-
-Problem
-
-Suppose:
-
-User Cache = 5 sec
-APT Cache = 2 sec
-Logs = 3 sec
-
-Total:
-
-10 sec
-
-Wait.
-
-Modern CPUs
-
-Tumhare system me likely:
-
-4 Core
-8 Thread
-
-ya usse zyada.
-
-Abhi:
-
-1 Thread use kar rahe ho
-
-Baaki CPU:
-
-Idle 😴
-Parallel Scanning Concept
-
-Instead of:
-
-User Cache
-↓
-APT
-↓
-Logs
-
-Run:
-
-User Cache  ─┐
-APT Cache   ─┼── Same Time
-Logs        ─┤
-Temp        ─┘
-Expected Benefit
-
-Current:
-
-Scan Time = 10 sec
-
-After:
-
-Scan Time = 2-4 sec
-
-Depending on disk.
-![alt text](image-1.png)
-
-# Optimisation Speed Score 
-
-![BenchMarkScore](image.png)
+Special thanks to the Python, Rich, and Textual ecosystems for making terminal applications enjoyable to build.
