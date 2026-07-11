@@ -1,8 +1,6 @@
 # Ubuntu Cache Cleaner
 
-<p align="center">
-  <img src="image-1.png" alt="Ubuntu Cache Cleaner banner" width="960">
-</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.12+">
@@ -11,7 +9,9 @@
   <img src="https://img.shields.io/badge/status-active-2E7D32?style=for-the-badge" alt="Project status">
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=for-the-badge" alt="License">
 </p>
-
+<p align="center">
+  <img src="image-1.png" alt="Ubuntu Cache Cleaner banner" width="960">
+</p>
 <p align="center">
   <strong>A polished terminal app for scanning Ubuntu cache, guiding safe cleanup, and generating clear reports.</strong>
 </p>
