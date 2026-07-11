@@ -33,7 +33,13 @@ class RecommendationEngine:
 
         )
 
-    def analyze(self, results):
+    def analyze(
+
+        self,
+
+        results
+
+    ):
 
         self.recommendations.clear()
 
@@ -47,31 +53,61 @@ class RecommendationEngine:
 
             if category.name == "User Cache":
 
-                self.userCache(sizeMB)
+                self.checkUserCache(
+
+                    sizeMB
+
+                )
 
             elif category.name == "APT Cache":
 
-                self.aptCache(sizeMB)
+                self.checkAPTCache(
+
+                    sizeMB
+
+                )
 
             elif category.name == "Browser Cache":
 
-                self.browserCache(sizeMB)
+                self.checkBrowserCache(
+
+                    sizeMB
+
+                )
 
             elif category.name == "Thumbnail Cache":
 
-                self.thumbnailCache(sizeMB)
+                self.checkThumbnailCache(
+
+                    sizeMB
+
+                )
 
             elif category.name == "Temp Files":
 
-                self.tempFiles(sizeMB)
+                self.checkTempFiles(
+
+                    sizeMB
+
+                )
 
             elif category.name == "Trash":
 
-                self.trash(category.files)
+                self.checkTrash(
+
+                    category.files
+
+                )
 
         return self.recommendations
 
-    def userCache(self, size):
+    def checkUserCache(
+
+        self,
+
+        size
+
+    ):
 
         if size > 2048:
 
@@ -97,7 +133,13 @@ class RecommendationEngine:
 
             )
 
-    def aptCache(self, size):
+    def checkAPTCache(
+
+        self,
+
+        size
+
+    ):
 
         if size > 300:
 
@@ -111,7 +153,13 @@ class RecommendationEngine:
 
             )
 
-    def browserCache(self, size):
+    def checkBrowserCache(
+
+        self,
+
+        size
+
+    ):
 
         if size > 500:
 
@@ -125,7 +173,13 @@ class RecommendationEngine:
 
             )
 
-    def thumbnailCache(self, size):
+    def checkThumbnailCache(
+
+        self,
+
+        size
+
+    ):
 
         if size < 10:
 
@@ -139,7 +193,13 @@ class RecommendationEngine:
 
             )
 
-    def tempFiles(self, size):
+    def checkTempFiles(
+
+        self,
+
+        size
+
+    ):
 
         if size > 100:
 
@@ -153,7 +213,13 @@ class RecommendationEngine:
 
             )
 
-    def trash(self, files):
+    def checkTrash(
+
+        self,
+
+        files
+
+    ):
 
         if files == 0:
 

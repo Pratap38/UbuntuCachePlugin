@@ -30,18 +30,27 @@ class CleaningScreen(Screen):
         yield Header()
 
         yield Static(
+
             "Cleaning Selected Caches...",
+
             id="title"
+
         )
 
         yield Static(
+
             "Preparing...",
+
             id="status"
+
         )
 
         yield ProgressBar(
+
             total=self.total,
+
             id="progress"
+
         )
 
         yield Footer()
@@ -50,46 +59,93 @@ class CleaningScreen(Screen):
 
         self.startCleaning()
 
-    @work(exclusive=True, thread=False)
+    @work(
+
+        exclusive=True,
+
+        thread=False
+
+    )
+
     async def startCleaning(self):
 
         status = self.query_one(
+
             "#status",
+
             Static
+
         )
 
         progress = self.query_one(
+
             "#progress",
+
             ProgressBar
+
         )
 
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.2)
 
         for cache in self.selectedCaches:
 
             status.update(
-                f"Cleaning : {cache}"
+
+                f"Cleaning ({self.completed + 1}/{self.total}) : {cache}"
+
             )
 
-            cleanerResult = cleanSelectedCache(
-                [cache]
-            )
+            try:
 
-            self.results.update(
-                cleanerResult
-            )
+                cleanerResult = cleanSelectedCache(
 
-            progress.advance(1)
+                    [cache]
+
+                )
+
+                self.results.update(
+
+                    cleanerResult
+
+                )
+
+            except Exception:
+
+                self.results[cache] = False
+
+            progress.advance(
+
+                1
+
+            )
 
             self.completed += 1
 
-            await asyncio.sleep(0)
+            await asyncio.sleep(
 
-        status.update(
-            "Cleaning Completed Successfully."
+                0.15
+
+            )
+
+        success = sum(
+
+            self.results.values()
+
         )
 
-        await asyncio.sleep(0.5)
+        failed = self.total - success
+
+        status.update(
+
+            f"Completed | Success : {success}  Failed : {failed}"
+
+        )
+
+        await asyncio.sleep(
+
+            0.8
+
+        )
 
         self.app.push_screen(
 

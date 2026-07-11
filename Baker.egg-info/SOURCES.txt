@@ -26,9 +26,11 @@ tests/CleanStressFolder.py
 tests/CleaningScreenTest.py
 tests/Completeclean.py
 tests/ConfigTest.py
+tests/CrashTest.py
 tests/Dashboardd.py
 tests/DeleteStress.py
 tests/Deleteeui.py
+tests/EnvironmentTest.py
 tests/EstimatorTest.py
 tests/Finalreport.py
 tests/LiveScann.py
@@ -37,6 +39,7 @@ tests/Parallel.py
 tests/PresetTest.py
 tests/Progressbarrr.py
 tests/RecommendationTest.py
+tests/RecoveryLogTest.py
 tests/RecoveryTest.py
 tests/RiskTest.py
 tests/StressTest.py

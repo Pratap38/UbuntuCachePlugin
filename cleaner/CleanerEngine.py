@@ -4,10 +4,22 @@ from cleaner.AptCleaner import CleanaptCheck
 from cleaner.ThrashCleaner import cleanThrash
 # from cleaner.TempCleaner import cleanTempFiles
 
+from core.RecoveryLogger import RecoveryLogger
+
 
 def cleanUserCache():
 
-    print("User Cache Cleaner Coming Soon")
+    print(
+
+        "User Cache Cleaner Coming Soon"
+
+    )
+
+    RecoveryLogger.log(
+
+        "User Cache Cleaner executed."
+
+    )
 
     return True
 
@@ -35,7 +47,11 @@ def cleanSelectedCache(selectedCache):
 
     for cache in selectedCache:
 
-        cleaner = cleaners.get(cache)
+        cleaner = cleaners.get(
+
+            cache
+
+        )
 
         if cleaner:
 
@@ -45,13 +61,41 @@ def cleanSelectedCache(selectedCache):
 
                 results[cache] = result
 
+                if result:
+
+                    RecoveryLogger.log(
+
+                        f"{cache} cleaned successfully."
+
+                    )
+
+                else:
+
+                    RecoveryLogger.log(
+
+                        f"{cache} cleaning completed with warnings."
+
+                    )
+
             except Exception as e:
+
+                RecoveryLogger.log(
+
+                    f"{cache} cleaning failed : {e}"
+
+                )
 
                 print(e)
 
                 results[cache] = False
 
         else:
+
+            RecoveryLogger.log(
+
+                f"No cleaner available for : {cache}"
+
+            )
 
             results[cache] = False
 

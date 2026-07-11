@@ -8,6 +8,7 @@ from textual.containers import Vertical
 
 from ui.CleanScreen import CleaningScreen
 from core.CleaningPreset import CleaningPreset
+from core.ConfigManager import ConfigManager
 
 
 class CacheSelectionScreen(App):
@@ -47,6 +48,12 @@ class CacheSelectionScreen(App):
 
     """
 
+    def __init__(self):
+
+        super().__init__()
+
+        self.config = ConfigManager()
+
     def compose(self):
 
         yield Header()
@@ -63,7 +70,9 @@ class CacheSelectionScreen(App):
 
                 ],
 
-                prompt="Select Cleaning Preset",
+                value=self.config.get(
+                    "defaultPreset"
+                ),
 
                 id="preset"
 
@@ -71,37 +80,31 @@ class CacheSelectionScreen(App):
 
             Checkbox(
                 "User Cache",
-                value=True,
                 id="user_cache"
             ),
 
             Checkbox(
                 "APT Cache",
-                value=False,
                 id="apt_cache"
             ),
 
             Checkbox(
                 "Temp Files",
-                value=True,
                 id="temp_files"
             ),
 
             Checkbox(
                 "Thumbnail Cache",
-                value=True,
                 id="thumbnail"
             ),
 
             Checkbox(
                 "Browser Cache",
-                value=True,
                 id="browser"
             ),
 
             Checkbox(
                 "Trash",
-                value=True,
                 id="trash"
             ),
 
@@ -114,13 +117,27 @@ class CacheSelectionScreen(App):
 
         yield Footer()
 
-    def on_select_changed(self, event):
+    def on_mount(self):
 
-        if event.select.id != "preset":
+        preset = self.config.get(
 
-            return
+            "defaultPreset"
 
-        preset = event.value
+        )
+
+        self.applyPreset(
+
+            preset
+
+        )
+
+    def applyPreset(
+
+        self,
+
+        preset
+
+    ):
 
         selectedCaches = CleaningPreset.getPreset(
 
@@ -129,52 +146,46 @@ class CacheSelectionScreen(App):
         )
 
         self.query_one(
-
             "#user_cache",
-
             Checkbox
-
         ).value = "User Cache" in selectedCaches
 
         self.query_one(
-
             "#apt_cache",
-
             Checkbox
-
         ).value = "APT Cache" in selectedCaches
 
         self.query_one(
-
             "#temp_files",
-
             Checkbox
-
         ).value = "Temp Files" in selectedCaches
 
         self.query_one(
-
             "#thumbnail",
-
             Checkbox
-
         ).value = "Thumbnail Cache" in selectedCaches
 
         self.query_one(
-
             "#browser",
-
             Checkbox
-
         ).value = "Browser Cache" in selectedCaches
 
         self.query_one(
-
             "#trash",
-
             Checkbox
-
         ).value = "Trash" in selectedCaches
+
+    def on_select_changed(self, event):
+
+        if event.select.id != "preset":
+
+            return
+
+        self.applyPreset(
+
+            event.value
+
+        )
 
     def on_button_pressed(self, event):
 
