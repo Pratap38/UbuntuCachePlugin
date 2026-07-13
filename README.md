@@ -74,16 +74,11 @@ The goal is to reduce guesswork without taking away control.
 
 Add visuals here when available:
 
-- `docs/assets/screenshots/dashboard.png`
-- `docs/assets/screenshots/scan-results.png`
-- `docs/assets/screenshots/report.png`
+- `<img width="1262" height="724" alt="image" src="https://github.com/user-attachments/assets/1c7b7464-948c-4bed-a266-e1811c98486b" />
 
-## GIFs
+- `<img width="1313" height="909" alt="image" src="https://github.com/user-attachments/assets/9127b252-3290-4bfd-a3a9-9d0b15c2590c" />
 
-Add walkthroughs here when available:
 
-- `docs/assets/gifs/scan-demo.gif`
-- `docs/assets/gifs/cleanup-flow.gif`
 
 ## Architecture
 
