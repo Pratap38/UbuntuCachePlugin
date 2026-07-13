@@ -29,8 +29,10 @@ class ReportScreen(Screen):
 
         report = ""
 
+        report += "Ubuntu Cache Cleaner\n"
+        report += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
         report += "Cleaning Report\n"
-        report += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        report += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
 
         for cache, status in self.results.items():
 
@@ -48,19 +50,21 @@ class ReportScreen(Screen):
 
         report += "\n"
 
-        report += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        report += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
+        report += "Cleaning Summary\n\n"
 
         report += f"Success : {success}\n"
 
         report += f"Failed  : {failed}\n"
 
-        report += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        report += "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
         scanResults = ParallelScan()
 
-        # -----------------------------
+        # --------------------------------------------------
         # Recommendation Engine
-        # -----------------------------
+        # --------------------------------------------------
 
         if self.config.get("showRecommendation"):
 
@@ -70,31 +74,49 @@ class ReportScreen(Screen):
 
                 recommendationEngine = RecommendationEngine()
 
-                recommendations = recommendationEngine.generate(
+                recommendations = recommendationEngine.analyze(
+
                     scanResults
+
                 )
 
                 if recommendations:
 
                     for item in recommendations:
 
-                        report += f"✓ {item}\n"
+                        report += (
+
+                            f"✓ "
+
+                            f"{item['title']} "
+
+                            f"[{item['level']}] : "
+
+                            f"{item['message']}\n"
+
+                        )
 
                 else:
 
-                    report += "✓ No recommendations.\n"
+                    report += "✓ No recommendations available.\n"
 
-            except Exception:
+            except Exception as e:
 
-                report += "Recommendation Engine unavailable.\n"
+                report += (
 
-        # -----------------------------
+                    f"Recommendation Error : "
+
+                    f"{e}\n"
+
+                )
+
+        # --------------------------------------------------
         # Auto Detection
-        # -----------------------------
+        # --------------------------------------------------
 
         if self.config.get("showAutoDetection"):
 
-            report += "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            report += "\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
             report += "\nAuto Detection\n\n"
 
@@ -102,8 +124,12 @@ class ReportScreen(Screen):
 
                 detectionEngine = AutoDetectionEngine()
 
-                warnings = detectionEngine.analazye(
+                # Use analyze() if you renamed it.
+                # If not, replace analyze with analazye.
+                warnings = detectionEngine.analyze(
+
                     scanResults
+
                 )
 
                 if warnings:
@@ -128,7 +154,13 @@ class ReportScreen(Screen):
 
             except Exception as e:
 
-                report += f"Auto Detection Error : {e}\n"
+                report += (
+
+                    f"Auto Detection Error : "
+
+                    f"{e}\n"
+
+                )
 
         yield Header()
 
