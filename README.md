@@ -10,7 +10,10 @@
   <img src="https://img.shields.io/badge/license-MIT-lightgrey?style=for-the-badge" alt="License">
 </p>
 <p align="center">
- <img width="1262" height="724" alt="image" src="https://github.com/user-attachments/assets/1c7b7464-948c-4bed-a266-e1811c98486b" />
+  <img width="1052" height="602" alt="Ubuntu_Cache_Cleaner_Demo" src="https://github.com/user-attachments/assets/454043e9-dfa8-44de-92a5-9c3e8e9fa44d" />
+  
+ 
+ 
 </p>
 <p align="center">
   <strong>A polished terminal app for scanning Ubuntu cache, guiding safe cleanup, and generating clear reports.</strong>
