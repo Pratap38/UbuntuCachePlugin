@@ -1,22 +1,13 @@
 {
     "enabled": true,
-
     "warningThreshold": 80,
-
     "criticalThreshold": 90,
-
     "emergencyThreshold": 97,
-
     "monitorInterval": 2,
-
     "autoPause": true,
-
     "autoResume": true,
-
     "desktopNotifications": true,
-
     "logEvents": true,
-
     "whitelist": [
         "systemd",
         "gnome-shell",
