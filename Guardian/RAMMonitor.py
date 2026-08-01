@@ -30,8 +30,8 @@ class RamMonitor:
                 0
             ),
             ramPercent=self.virtualmemory.percent,
-            totalSwap=self.virtualmemory.total,
-            usedSwap=self.virtualmemory.used,
+            totalSwap=self.swapMemory.total,
+            usedSwap=self.swapMemory.used,
             freeSwap=self.swapMemory.free,
             swapPercent=self.swapMemory.percent
         )
