@@ -42,7 +42,7 @@ class MemoryInfo:
         return round(self.bufferRam/(1024**3),2)
     @property
     def totalSwapGb(self)->float:
-        return round(self.totalRam/(1024**3),2)
+        return round(self.totalSwap/(1024**3),2)
     @property
     def usedSwapGb(self)->float:
         return round(self.usedSwap/(1024**3),2)
