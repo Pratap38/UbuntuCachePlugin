@@ -28,7 +28,7 @@ class DesktopChecker:
     
     def isX11(self) -> bool:
 
-        return self.environment == DesktopEnv.X11
+        return self.environment == DesktopEnv.x11
 
     # -----------------------------------------------------
 
@@ -50,4 +50,4 @@ class DesktopChecker:
         X11-based window tools.
         """
 
-        return self.environment.supportsWindowTracking
+        return self.environment.supportwindowTrack
