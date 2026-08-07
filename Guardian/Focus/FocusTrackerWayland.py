@@ -44,34 +44,20 @@ class FocusTrackerWayland(FoucuTracker):
 
         )
 
-        pid = self.resolver.resolvePID(
+        pid = self.resolver.resolvepid(
 
             application
 
         )
 
         self.currentWindow = WindowInfo(
-
-            window_id=detected.get(
-
-                "window_id",
-
-                "WAYLAND"
-
-            ),
-
-            pid=pid or -1,
-
+            windoId=detected.get("window_id", "WAYLAND"),
+            pID=pid or -1,
             application=application,
-
             title=title,
-
             focused=True,
-
             timestamp=datetime.now(),
-
-            environment=DesktopEnv.WAYLAND
-
+            environment=DesktopEnv.WAYLAND,
         )
 
         return self.currentWindow
@@ -92,7 +78,7 @@ class FocusTrackerWayland(FoucuTracker):
 
     def isSupported(self):
 
-        return self.detector.supportsDetection()
+        return self.detector.supportDetector()
 
     # -----------------------------------------------------
 

@@ -37,3 +37,11 @@ class WindowInfo:
             "timestamp": self.timestamp.isoformat(),
             "environment": str(self.environment),
         }
+
+    @property
+    def window_id(self):
+        return self.windoId
+
+    @property
+    def pid(self):
+        return self.pID

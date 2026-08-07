@@ -8,7 +8,7 @@ class WindowDetector:
          self.backend=WaylandBackend()
 
     def isAvail(self) -> bool:
-                 return self.backend.isAvailable()
+                 return self.backend.isAvail()
     def supportDetector(self)->bool:
            if not self.isAvail():
 
