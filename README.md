@@ -69,12 +69,6 @@ Linux users often accumulate cache, temporary files, and app-specific clutter ov
 
 This project solves that problem by providing a structured, safe, and explainable way to inspect and clean cache data from the terminal.
 
-## Problem Statement 2
-
-Modern Linux systems, especially those with limited RAM, can become unresponsive or completely freeze when memory usage reaches critical levels. Existing system monitoring tools typically only display resource usage and alert users after the problem has already occurred, leaving manual intervention as the only option. This reactive approach can interrupt workflows, force system restarts, and increase the risk of data loss.
-
-RAM Guardian v2.0 aims to solve this problem by introducing a proactive memory management system that continuously monitors RAM usage, intelligently tracks user activity, identifies inactive background applications using Least Recently Used (LRU) analysis, and automatically pauses safe, non-critical processes before the system reaches a freeze state. The system also resumes paused applications seamlessly when the user returns to them, providing a safer, smarter, and automated approach to memory management on modern Linux desktops.
-
 ## Highlights
 
 | Area | What You Get |
