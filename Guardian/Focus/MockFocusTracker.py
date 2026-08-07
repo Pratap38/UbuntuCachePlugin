@@ -1,19 +1,19 @@
 from datetime import datetime
 
-from Guardian.Focus.FocusTrackerBase import FocusTrackerBase
+from Guardian.Focus.FocusTrackerBase import FoucuTracker
 from Guardian.models.WindowInfo import WindowInfo
-from Guardian.models.DesktopEnvironment import DesktopEnvironment
+from Guardian.models.DesktopEnvironment import DesktopEnv
 
 
-class MockFocusTracker(FocusTrackerBase):
+class MockFocusTracker(FoucuTracker):
 
     def __init__(self):
 
         self.window = WindowInfo(
 
-            window_id="MOCK-0001",
+            windoId="MOCK-0001",
 
-            pid=12345,
+            pID=12345,
 
             application="Firefox",
 
@@ -23,7 +23,7 @@ class MockFocusTracker(FocusTrackerBase):
 
             timestamp=datetime.now(),
 
-            environment=DesktopEnvironment.WAYLAND
+            environment=DesktopEnv.WAYLAND
 
         )
 
@@ -73,9 +73,9 @@ class MockFocusTracker(FocusTrackerBase):
 
         self.window = WindowInfo(
 
-            window_id=f"MOCK-{pid}",
+            windoId=f"MOCK-{pid}",
 
-            pid=pid,
+            pID=pid,
 
             application=application,
 
@@ -85,6 +85,6 @@ class MockFocusTracker(FocusTrackerBase):
 
             timestamp=datetime.now(),
 
-            environment=DesktopEnvironment.WAYLAND
+            environment=DesktopEnv.WAYLAND
 
         )
