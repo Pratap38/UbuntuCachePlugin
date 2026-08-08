@@ -191,6 +191,19 @@ pip install -e .
 bash install.sh
 ```
 
+### Installing the RAM Guardian GNOME Extension
+
+If you are testing focus detection, install the GNOME Shell extension into the
+active session data directory:
+
+```bash
+bash install-gnome-extension.sh
+```
+
+This installs to `${XDG_DATA_HOME:-$HOME/.local/share}/gnome-shell/extensions/`
+so it works even when your terminal overrides `XDG_DATA_HOME` (for example, when
+running inside a Snap-managed editor terminal).
+
 ## Quick Start
 
 ```bash

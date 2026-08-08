@@ -1,0 +1,10 @@
+{
+    "uuid": "ram-guardian-focus@ubuntu-cache-cleaner",
+    "name": "RAM Guardian Focus Tracker",
+    "description": "Provides focused application information to RAM Guardian.",
+    "version": 1,
+    "shell-version": [
+        "46"
+    ],
+    "url": "https://github.com/pratap38/UbuntuCacheCleaner"
+}
