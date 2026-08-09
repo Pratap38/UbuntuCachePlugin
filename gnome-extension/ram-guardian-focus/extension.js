@@ -1,9 +1,11 @@
 import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
 import Shell from 'gi://Shell';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 export default class RamGuardianFocusExtension extends Extension {
     enable() {
+        this._socketPath = this._resolveSocketPath();
         this._display = global.display;
         this._focusChangedId = this._display.connect(
             'notify::focus-window',
@@ -20,6 +22,7 @@ export default class RamGuardianFocusExtension extends Extension {
 
         this._display = null;
         this._focusChangedId = 0;
+        this._socketPath = null;
     }
 
     _logFocusedWindow() {
@@ -46,5 +49,41 @@ export default class RamGuardianFocusExtension extends Extension {
         };
 
         console.log('[RAM Guardian] Focus changed:', JSON.stringify(payload));
+        this._sendPayload(payload);
+    }
+
+    _resolveSocketPath() {
+        const runtimeDir = GLib.getenv('XDG_RUNTIME_DIR');
+        if (runtimeDir) {
+            return `${runtimeDir}/ram-guardian-focus.sock`;
+        }
+
+        return null;
+    }
+
+    _sendPayload(payload) {
+        if (!this._socketPath) {
+            return;
+        }
+
+        try {
+            const client = new Gio.SocketClient();
+            const address = Gio.UnixSocketAddress.new(this._socketPath);
+
+            client.connect_async(address, null, (_client, result) => {
+                try {
+                    const connection = client.connect_finish(result);
+                    const output = new Gio.DataOutputStream({
+                        base_stream: connection.get_output_stream(),
+                    });
+                    output.put_string(`${JSON.stringify(payload)}\n`, null);
+                    connection.close(null);
+                } catch (error) {
+                    console.log('[RAM Guardian] Socket send failed:', String(error));
+                }
+            });
+        } catch (error) {
+            console.log('[RAM Guardian] Socket init failed:', String(error));
+        }
     }
 }
