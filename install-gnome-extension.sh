@@ -4,14 +4,14 @@ set -euo pipefail
 
 EXT_UUID="ram-guardian-focus@ubuntu-cache-cleaner"
 EXT_SOURCE_DIR="gnome-extension/ram-guardian-focus"
-PRIMARY_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
-FALLBACK_DATA_HOME="$HOME/.local/share"
 
-if mkdir -p "$PRIMARY_DATA_HOME" 2>/dev/null && [ -w "$PRIMARY_DATA_HOME" ]; then
-    DATA_HOME="$PRIMARY_DATA_HOME"
-else
-    DATA_HOME="$FALLBACK_DATA_HOME"
-fi
+# GNOME Shell itself runs with no XDG_DATA_HOME override and always reads
+# extensions from $HOME/.local/share/gnome-shell/extensions. Do NOT honor
+# XDG_DATA_HOME from the invoking shell here: terminals launched from snap
+# packages (e.g. VS Code's integrated terminal) rewrite XDG_DATA_HOME to a
+# private snap sandbox path, which silently installs the extension where
+# GNOME Shell will never see it.
+DATA_HOME="$HOME/.local/share"
 
 EXT_TARGET_DIR="$DATA_HOME/gnome-shell/extensions/$EXT_UUID"
 
@@ -49,5 +49,7 @@ else
 fi
 
 echo
-echo "If this shell session uses a non-standard XDG_DATA_HOME, install the extension"
-echo "from the same environment where GNOME Shell is running."
+echo "After installing, reload the extension:"
+echo "  gnome-extensions disable $EXT_UUID && gnome-extensions enable $EXT_UUID"
+echo "If GNOME Shell still runs the old code (GNOME 45+ caches the JS module"
+echo "on Wayland), log out and back in to fully restart the shell."
