@@ -23,4 +23,7 @@ class DesktopEnv(Enum):
         return description[self]
     @property
     def supportwindowTrack(self):
-        return self==DesktopEnv.x11
+        return self in (
+            DesktopEnv.x11,
+            DesktopEnv.WAYLAND,
+        )
