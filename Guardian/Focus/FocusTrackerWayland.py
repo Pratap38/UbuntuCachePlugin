@@ -46,10 +46,11 @@ class FocusTrackerWayland(FoucuTracker):
         return None
 
     
-    def isSupported(self):
+    @classmethod
+    def isSupported(cls):
        
 
-        return self.detector.supportDetector()
+        return WindowDetector().supportDetector()
 
   
 
