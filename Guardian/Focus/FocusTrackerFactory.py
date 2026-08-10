@@ -11,7 +11,7 @@ class FocusTrackerFactory:
         if environment==DesktopEnv.WAYLAND:
             return FocusTrackerWayland()
         if environment==DesktopEnv.x11:
-            return NotImplementedError(
+            raise NotImplementedError(
                 "X11 is currently not implement is in devlopiing phase"
             )
         raise RuntimeError(
