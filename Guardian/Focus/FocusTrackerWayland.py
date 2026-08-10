@@ -1,10 +1,10 @@
-from Guardian.Focus.FocusTrackerBase import FoucuTracker
+from Guardian.Focus.FocusTrackerBase import FocusTracker
 from Guardian.models.WindowInfo import WindowInfo
 from Guardian.platform.Wayland.WindowDetector import WindowDetector
 from Guardian.platform.Wayland.FocusReceiver import FocusReceiver
 
 
-class FocusTrackerWayland(FoucuTracker):
+class FocusTrackerWayland(FocusTracker):
 
     def __init__(self, receiver=None, autostart=True):
         

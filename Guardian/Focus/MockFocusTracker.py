@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from Guardian.Focus.FocusTrackerBase import FoucuTracker
+from Guardian.Focus.FocusTrackerBase import FocusTracker
 from Guardian.models.WindowInfo import WindowInfo
 from Guardian.models.DesktopEnvironment import DesktopEnv
 
 
-class MockFocusTracker(FoucuTracker):
+class MockFocusTracker(FocusTracker):
 
     def __init__(self):
 

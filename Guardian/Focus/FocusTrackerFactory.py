@@ -1,11 +1,11 @@
 from Guardian.DesktopChecker import DesktopChecker
 from Guardian.models.DesktopEnvironment import DesktopEnv
-from Guardian.Focus.FocusTrackerBase import FoucuTracker
+from Guardian.Focus.FocusTrackerBase import FocusTracker
 from Guardian.Focus.FocusTrackerWayland import FocusTrackerWayland
 
 class FocusTrackerFactory:
     @staticmethod
-    def create(environment:DesktopEnv|None=None,)->FoucuTracker:
+    def create(environment:DesktopEnv|None=None,)->FocusTracker:
         if environment is None:
             environment=DesktopChecker().current()
         if environment==DesktopEnv.WAYLAND:
