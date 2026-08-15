@@ -77,3 +77,18 @@ class ProcessTracker:
         ):
 
             return None
+
+#(sortig karte apan ha mb/gb ke basepe)
+    def topMemoryProcesses(
+        self,
+        limit: int = 10
+    ) -> list[ProcessInfo]:
+
+        processes = self.userProcess()
+
+        processes.sort(
+            key=lambda process: process.memoryBytes,
+            reverse=True
+        )
+
+        return processes[:limit]
