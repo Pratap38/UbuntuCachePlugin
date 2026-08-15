@@ -35,5 +35,22 @@ class ProcessTracker:
          
     def userProcess(self):
         pass
-    def process(pid):
-        pass
+    def process(self,pid:int)->ProcessInfo|None:
+        try:
+            process=psutil.Process(pid)
+            memoryInfo=process.memory_info()
+            return ProcessInfo(
+                pid=process.pid,
+                name=process.name(),
+                userName=process.username(),
+                memoryBytes=memoryInfo.rss,
+                memoryPercent=process.memory_percent(),
+                status=process.status(),
+            )
+        except (
+            psutil.NoSuchProcess,
+            psutil.AccessDenied,
+            psutil.ZombieProcess,
+        ):
+
+            return None
