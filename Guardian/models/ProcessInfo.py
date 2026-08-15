@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass(slots=True)
 class ProcessInfo:
-    pid:str
+    pid:int
     name:str
     userName:str|None       ##pratap||root linux user use kar rha
 
