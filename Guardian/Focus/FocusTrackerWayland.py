@@ -15,6 +15,7 @@ class FocusTrackerWayland(FocusTracker):
         
         self.receiver = receiver or FocusReceiver()
         self.lru=LRU()
+        self._lastLRUPid = None
 
         # Start the IPC receiver automatically in normal operation.
         if autostart and not self.receiver.is_running():
@@ -30,10 +31,18 @@ class FocusTrackerWayland(FocusTracker):
 
         if receiver_window is not None:
             self.currentWindow = receiver_window
-            self.lru.updateFromWindow(           ##our lru will get detail of recent update application
+            current_pid = self.currentWindow.pID
+            if current_pid != self._lastLRUPid:
+                    self.lru.updateFromWindow(
                 self.currentWindow
             )
-            return self.currentWindow
+                    self._lastLRUPid = current_pid
+
+           ##our lru will get detail of recent update application
+
+
+            
+                 
 
       
         return self.currentWindow
@@ -66,12 +75,12 @@ class FocusTrackerWayland(FocusTracker):
 
         return self.currentWindow
 
-   
-
     def stop(self):
-       
 
         if self.receiver.is_running():
             self.receiver.stop()
 
         self.currentWindow = None
+        self._lastLRUPid = None
+    def getLRU(self)->LRU:
+        return self.lru
