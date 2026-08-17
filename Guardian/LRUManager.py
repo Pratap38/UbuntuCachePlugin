@@ -43,3 +43,18 @@ class LRU:
 
     def size(self)->int:
         return len(self.lastUsed)
+    def updateFromWindow(self, window) -> None:
+
+        if window is None:
+            return
+
+        if not window.isValid:
+            return
+
+        if not window.focused:
+            return
+
+        self.update(
+            window.pID,
+            window.timestamp
+        )

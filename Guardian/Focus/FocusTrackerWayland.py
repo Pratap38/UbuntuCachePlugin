@@ -2,6 +2,7 @@ from Guardian.Focus.FocusTrackerBase import FocusTracker
 from Guardian.models.WindowInfo import WindowInfo
 from Guardian.platform.Wayland.WindowDetector import WindowDetector
 from Guardian.platform.Wayland.FocusReceiver import FocusReceiver
+from Guardian.LRUManager import LRU
 
 
 class FocusTrackerWayland(FocusTracker):
@@ -13,6 +14,7 @@ class FocusTrackerWayland(FocusTracker):
 
         
         self.receiver = receiver or FocusReceiver()
+        self.lru=LRU()
 
         # Start the IPC receiver automatically in normal operation.
         if autostart and not self.receiver.is_running():
@@ -28,6 +30,9 @@ class FocusTrackerWayland(FocusTracker):
 
         if receiver_window is not None:
             self.currentWindow = receiver_window
+            self.lru.updateFromWindow(           ##our lru will get detail of recent update application
+                self.currentWindow
+            )
             return self.currentWindow
 
       
