@@ -55,7 +55,7 @@ class ProcessTracker:
             if process.userName != currentUser:
                 continue
 
-            if self.whitelistManager.isWhitelisted[process]:
+            if self.whitelistManager.isWhitelisted(process):
                 continue
 
             processes.append(process)
