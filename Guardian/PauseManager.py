@@ -30,7 +30,7 @@ class PauseManager:
             if processuser!=currentUser:
                 return False
 
-            if self.whitelistManager.isWhitelisted(process.name()):
+            if self.whitelistManager.isWhitelistedName(process.name()):
                 return False
             if pid==os.getpid():
                 return False
@@ -44,7 +44,7 @@ class PauseManager:
 
     def pause(self, pid: int) -> bool:
 
-        if not self.canPause(pid):
+        if not self.canpause(pid):
             return False
 
         try:
