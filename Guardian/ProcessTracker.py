@@ -1,11 +1,18 @@
 ##ab process tracker ka code bana rhe ki current applcation konse runing me hai 
+## addde white list in order to protect that application that is essential to make an laptop run
 
 import psutil
 from Guardian.models.ProcessInfo import ProcessInfo
-from Guardian.GuardianConfig import GuardianConfig
+from Guardian.WhitelistManager import WhitelistManager
 
 
 class ProcessTracker:
+
+
+
+    def __init__(self):
+
+     self.whitelistManager = WhitelistManager()
     def runningProcess(self)->list[ProcessInfo]:
         processes=[]
         for process in psutil.process_iter(            ##process iter psutil me method hai through which i can iterate thjough all the process runing in the active terminal 
@@ -36,14 +43,10 @@ class ProcessTracker:
          
     def userProcess(self) -> list[ProcessInfo]:
 
-        config = GuardianConfig()
-
+        
         currentUser = psutil.Process().username()
 
-        whitelist = config.get(
-            "whitelist",
-            []
-        )
+       
 
         processes = []
 
@@ -52,7 +55,7 @@ class ProcessTracker:
             if process.userName != currentUser:
                 continue
 
-            if process.name in whitelist:
+            if self.whitelistManager.isWhitelisted[process]:
                 continue
 
             processes.append(process)
