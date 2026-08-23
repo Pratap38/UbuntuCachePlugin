@@ -6,7 +6,7 @@ class EventHistory:
 
     def __init__(
         self,
-        limit: int = 100         ##we have setted the lomt p yje log to 100 in order to not create an mess up record
+        limit: int = 100        ##we have setted the lomt p yje log to 100 in order to not create an mess up record
     ):
 
         self.limit = limit
