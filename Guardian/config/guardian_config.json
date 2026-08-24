@@ -7,6 +7,7 @@
     "autoPause": true,
     "autoResume": true,
     "desktopNotifications": true,
+    "resumeThreshold": 75,
     "logEvents": true,
     "whitelist": [
         "systemd",
