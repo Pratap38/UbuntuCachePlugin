@@ -24,3 +24,8 @@ class GuardianOrchestrator:
         self.resumePolicy=ResumePolicy()
         self.eventHistory=EventHistory()
         self.notificationManager=NotificationManager()
+    def analyzeMemory(self):
+        memory=self.ramMonitor.collect()
+        pressure=self.pressureCheck.analyze(memory)
+        decision=self.decisionEngine.decide(pressure)
+        return memory,pressure,decision
