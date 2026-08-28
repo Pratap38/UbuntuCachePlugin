@@ -10,7 +10,7 @@ from Guardian.ResumePolicy import ResumePolicy
 from Guardian.EventHistory import EventHistory
 from Guardian.NotificationManager import NotificationManager
 from Guardian.models.PausedProcess import PauseProcess
-import datetime
+from datetime import datetime
 from Guardian.models.GuardianEvent import GuardianEvent
 class GuardianOrchestrator:
     def __init__(self):
@@ -49,7 +49,7 @@ class GuardianOrchestrator:
         rank=self.memoryRanker.rank(candidate)
         return memory,pressure,decision,rank
 ##creating pause marnager in order to now start pausein the app
-    def pauseCandidate(self,process,rampercent:float,reason:str="RAM Critical")->bool:
+    def pauseCandidate(self,process,ramPercent:float,reason:str="RAM Critical")->bool:
         if process is None:
             return False
         if process.pid<=0:
@@ -66,6 +66,9 @@ class GuardianOrchestrator:
                 self.resumeManager.resume(process.pid)
             except Exception:
                 pass
+            return False
+
+        if not self.pauseManager.pause(process.pid):
             return False
 
         pauseAt=datetime.now()
@@ -92,7 +95,7 @@ class GuardianOrchestrator:
             processName=process.name,
             timestamp=pauseAt,
             reason=reason,
-            ramPercent=rampercent
+            ramPercent=ramPercent
         )
 
         if not self.eventHistory.add(
