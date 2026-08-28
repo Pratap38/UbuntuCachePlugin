@@ -9,7 +9,9 @@ from Guardian.PauseRegistry import PauseRegistry
 from Guardian.ResumePolicy import ResumePolicy
 from Guardian.EventHistory import EventHistory
 from Guardian.NotificationManager import NotificationManager
-
+from Guardian.models.PausedProcess import PauseProcess
+import datetime
+from Guardian.models.GuardianEvent import GuardianEvent
 class GuardianOrchestrator:
     def __init__(self):
         self.ramMonitor=RamMonitor()
@@ -46,3 +48,70 @@ class GuardianOrchestrator:
             return memory,pressure,decision,[]
         rank=self.memoryRanker.rank(candidate)
         return memory,pressure,decision,rank
+##creating pause marnager in order to now start pausein the app
+    def pauseCandidate(self,process,rampercent:float,reason:str="RAM Critical")->bool:
+        if process is None:
+            return False
+        if process.pid<=0:
+            return False
+        if not process.name:
+            return False
+        if process.memoryBytes<=0:
+            return False
+        if self.pauseRegistry.contains(process.pid):
+            return False
+
+        if not self.pauseManager.canpause(process.pid):
+            try:
+                self.resumeManager.resume(process.pid)
+            except Exception:
+                pass
+            return False
+
+        pauseAt=datetime.now()
+        pausedProcess=PauseProcess(
+            pid=process.pid,
+            name=process.name,
+            pausedAt=pauseAt,
+            reason=reason
+        )
+        if not self.pauseRegistry.add(
+            pausedProcess
+        ):
+            try:
+                self.resumeManager.resume(
+                    process.pid
+                )
+            except Exception:
+                pass
+
+            return False
+        event = GuardianEvent(
+            eventType="PAUSED",
+            pid=process.pid,
+            processName=process.name,
+            timestamp=pauseAt,
+            reason=reason,
+            ramPercent=rampercent
+        )
+
+        if not self.eventHistory.add(
+            event
+        ):
+            self.pauseRegistry.remove(
+                process.pid
+            )
+
+            try:
+                self.resumeManager.resume(
+                    process.pid
+                )
+            except Exception:
+                pass
+
+            return False
+
+        return True
+
+        
+        
