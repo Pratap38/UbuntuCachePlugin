@@ -39,3 +39,10 @@ class GuardianOrchestrator:
         candidate=self.candidateSelector.getCandidates()
 
         return memory,pressure,decision,candidate
+## sortng the candindate on the basis of rht the rank
+    def rankCandidate(self):
+        memory,pressure,decision,candidate=(self.getCandidate())
+        if not decision:
+            return memory,pressure,decision,[]
+        rank=self.memoryRanker.rank(candidate)
+        return memory,pressure,decision,rank
