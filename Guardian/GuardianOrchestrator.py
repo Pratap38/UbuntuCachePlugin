@@ -116,5 +116,89 @@ class GuardianOrchestrator:
 
         return True
 
-        
+    def runPauseCycle(self):
+
+        memory = self.ramMonitor.collect()
+
+        pressure = self.pressureCheck.analyze(
+            memory
+        )
+
+        decision = self.decisionEngine.decide(
+            pressure
+        )
+
+        if not decision:
+
+            return {
+                "action": False,
+                "reason": "No action required",
+                "memory": memory,
+                "pressure": pressure,
+                "process": None,
+            }
+
+        candidates = self.candidateSelector.getCandidates()
+
+        if not candidates:
+
+            return {
+                "action": False,
+                "reason": "No eligible candidates",
+                "memory": memory,
+                "pressure": pressure,
+                "process": None,
+            }
+
+        ranked = self.memoryRanker.rank(
+            candidates
+        )
+
+        if not ranked:
+
+            return {
+                "action": False,
+                "reason": "No ranked candidates",
+                "memory": memory,
+                "pressure": pressure,
+                "process": None,
+            }
+
+        for candidate in ranked:
+
+            if self.pauseRegistry.contains(
+                candidate.pid
+            ):
+                continue
+
+            if not self.pauseManager.canpause(
+                candidate.pid
+            ):
+                continue
+
+            success = self.pauseCandidate(
+                candidate,
+                ramPercent=memory.ramPercent,
+                reason="RAM Critical"
+            )
+
+            if success:
+
+                return {
+                    "action": True,
+                    "reason": "Process paused",
+                    "memory": memory,
+                    "pressure": pressure,
+                    "process": candidate,
+                }
+
+        return {
+            "action": False,
+            "reason": "No candidate passed final safety checks",
+            "memory": memory,
+            "pressure": pressure,
+            "process": None,
+        }
+
+
         
