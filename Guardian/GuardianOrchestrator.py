@@ -25,6 +25,10 @@ class GuardianOrchestrator:
         self.resumeManager=ResumeManager()
         self.pauseRegistry=PauseRegistry()
         self.resumePolicy=ResumePolicy()
+        self.resumeCandidateSelector=ResumeCandidateSelector(
+            pauseRegistry=self.pauseRegistry,
+            resumePolicy=self.resumePolicy
+        )
         self.eventHistory=EventHistory()
         self.notificationManager=NotificationManager()
 
