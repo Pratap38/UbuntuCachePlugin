@@ -170,3 +170,44 @@ class GuardianEngine:
             "actionReason": actionReason,
             "pausedProcess": pausedProcess,
         }
+
+    def resumeCycle(self, ramPercent):
+
+        candidates = (
+            self.orchestrator
+            .resumeCandidateSelector
+            .select(ramPercent)
+        )
+
+        resumedProcess = None
+
+        for candidate in candidates:
+
+            if not self.orchestrator.resumeManager.canResume(
+                candidate.pid
+            ):
+                continue
+
+            success = (
+                self.orchestrator.resumeManager.resume(
+                    candidate.pid
+                )
+            )
+
+            if not success:
+                continue
+
+            if self.orchestrator.pauseManager.isPaused(
+                candidate.pid
+            ):
+                continue
+
+            resumedProcess = candidate
+
+            self.orchestrator.pauseRegistry.remove(
+                candidate.pid
+            )
+
+            break
+
+        return resumedProcess
