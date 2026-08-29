@@ -86,7 +86,7 @@ class GuardianEngine:
         notificationSent = (
             self.notificationManager.notify(
                 pressure,
-                memory
+                memory.ramPercent
             )
         )
 
