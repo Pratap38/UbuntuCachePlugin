@@ -206,8 +206,48 @@ class GuardianOrchestrator:
         candidates=selector.select(memory.ramPercent)
 
         return (memory,candidates)
+    def resumeCycle(self, ramPercent: float):
 
         
 
+        candidates = self.resumeCandidateSelector.select(
+            ramPercent
+        )
 
-        
+        resumed = []
+
+        for candidate in candidates:
+
+           
+            if not self.resumeManager.canResume(
+                candidate.pid
+            ):
+                continue
+
+       
+            success = self.resumeManager.resume(
+                candidate.pid
+            )
+
+            if not success:
+                continue
+
+          
+            if self.pauseManager.isPaused(
+                candidate.pid
+            ):
+                continue
+
+            resumed.append(candidate)
+
+         
+            self.pauseRegistry.remove(
+                candidate.pid
+            )
+
+        return resumed
+
+            
+
+
+            

@@ -11,5 +11,6 @@ class ResumePolicy:
             return False
         return ramPercent<=self.resumeThreshold
 
+    @property
     def threshold(self)->float:
         return self.resumeThreshold
