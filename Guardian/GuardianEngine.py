@@ -9,7 +9,7 @@ class GuardianEngine:
     def __init__(
         self,
         orchestrator: Optional[GuardianOrchestrator] = None,
-        interval: float = 5.0
+        interval: float = 5.0,
     ):
 
         if interval <= 0:
@@ -26,6 +26,10 @@ class GuardianEngine:
         self.interval = interval
 
         self.running = False
+
+        self.notificationManager = (
+            self.orchestrator.notificationManager
+        )
 
    
 
@@ -79,8 +83,16 @@ class GuardianEngine:
             )
         )
 
+        notificationSent = (
+            self.notificationManager.notify(
+                pressure,
+                memory
+            )
+        )
+
         return {
             "memory": memory,
             "pressure": pressure,
             "decision": decision,
+            "notificationSent": notificationSent,
         }
