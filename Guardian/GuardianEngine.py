@@ -4,6 +4,9 @@ from typing import Optional
 from Guardian.GuardianOrchestrator import GuardianOrchestrator
 
 
+from Guardian.InterventionGuard import InterventionGuard
+
+
 class GuardianEngine:
 
     def __init__(
@@ -30,6 +33,10 @@ class GuardianEngine:
         self.notificationManager = (
             self.orchestrator.notificationManager
         )
+        self.interventionGuard = InterventionGuard(
+    cooldownSeconds=30.0,
+    maxInterventions=1
+)
 
    
 
@@ -67,9 +74,7 @@ class GuardianEngine:
 
     def runCycle(self):
 
-        memory = (
-            self.orchestrator.ramMonitor.collect()
-        )
+        memory = self.orchestrator.ramMonitor.collect()
 
         pressure = (
             self.orchestrator.pressureCheck.analyze(
@@ -90,9 +95,78 @@ class GuardianEngine:
             )
         )
 
+        pausedProcess = None
+        actionTaken = False
+        actionReason = "No action required"
+
+        if decision:
+
+            if not self.interventionGuard.canIntervene():
+
+                actionReason = (
+                    "Intervention blocked by safety guard"
+                )
+
+            else:
+
+                candidates = (
+                    self.orchestrator.candidateSelector
+                    .getCandidates()
+                )
+
+                ranked = (
+                    self.orchestrator.memoryRanker
+                    .rank(candidates)
+                )
+
+                for candidate in ranked:
+
+                    if (
+                        self.orchestrator.pauseRegistry
+                        .contains(candidate.pid)
+                    ):
+                        continue
+
+                    if not (
+                        self.orchestrator.pauseManager
+                        .canPause(candidate.pid)
+                    ):
+                        continue
+
+                    success = (
+                        self.orchestrator.pauseCandidate(
+                            candidate,
+                            ramPercent=memory.ramPercent,
+                            reason="RAM Critical"
+                        )
+                    )
+
+                    if success:
+
+                        self.interventionGuard.recordIntervention()
+
+                        pausedProcess = candidate
+
+                        actionTaken = True
+
+                        actionReason = (
+                            "Process paused"
+                        )
+
+                        break
+
+                if pausedProcess is None:
+
+                    actionReason = (
+                        "No safe candidate available"
+                    )
+
         return {
             "memory": memory,
             "pressure": pressure,
             "decision": decision,
             "notificationSent": notificationSent,
+            "actionTaken": actionTaken,
+            "actionReason": actionReason,
+            "pausedProcess": pausedProcess,
         }
