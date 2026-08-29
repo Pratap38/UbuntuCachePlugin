@@ -40,4 +40,18 @@ class CandidateSelect:
                 candidates.append(process)
 
         return candidates
+
+    def createFromProcess(self, process) -> ProcessInfo | None:
+        try:
+            memory = process.memory_info()
+            return ProcessInfo(
+                pid=process.pid,
+                name=process.name(),
+                userName=process.username(),
+                memoryBytes=memory.rss,
+                memoryPercent=process.memory_percent(),
+                status=process.status(),
+            )
+        except Exception:
+            return None
         
