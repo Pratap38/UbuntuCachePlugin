@@ -12,6 +12,7 @@ from Guardian.NotificationManager import NotificationManager
 from Guardian.models.PausedProcess import PauseProcess
 from datetime import datetime
 from Guardian.models.GuardianEvent import GuardianEvent
+from Guardian.ResumeCandidateSelector import ResumeCandidateSelector
 class GuardianOrchestrator:
     def __init__(self):
         self.ramMonitor=RamMonitor()
@@ -199,6 +200,14 @@ class GuardianOrchestrator:
             "pressure": pressure,
             "process": None,
         }
+    def findResumCandidate(self):
+        memory=self.ramMonitor.collect()
+        selector=ResumeCandidateSelector(pauseRegistry=self.pauseRegistry,resumePolicy=self.resumePolicy)
+        candidates=selector.select(memory.ramPercent)
+
+        return (memory,candidates)
+
+        
 
 
         
