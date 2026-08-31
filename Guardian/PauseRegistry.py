@@ -303,3 +303,32 @@ class PauseRegistry:
         ):
 
             return False
+
+    def cleanupStaleProcesses(self) -> list[int]:
+
+        stalePids = []
+
+        for pid in list(self.processes.keys()):
+
+            if not psutil.pid_exists(pid):
+
+                stalePids.append(pid)
+                continue
+
+            if not self.isSameProcess(pid):
+
+                stalePids.append(pid)
+
+        for pid in stalePids:
+
+            self.processes.pop(pid, None)
+
+        if stalePids:
+
+            if not self._save():
+
+                raise RuntimeError(
+                    "Failed to persist stale registry cleanup."
+                )
+
+        return stalePids
