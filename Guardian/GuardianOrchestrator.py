@@ -77,11 +77,22 @@ class GuardianOrchestrator:
             return False
 
         pauseAt=datetime.now()
+
+        processStartTime = None
+        try:
+            psutilProcess = __import__('psutil').Process(
+                process.pid
+            )
+            processStartTime = psutilProcess.create_time()
+        except Exception:
+            processStartTime = pauseAt.timestamp()
+
         pausedProcess=PauseProcess(
             pid=process.pid,
             name=process.name,
             pausedAt=pauseAt,
-            reason=reason
+            reason=reason,
+            processStartTime=processStartTime
         )
         if not self.pauseRegistry.add(
             pausedProcess

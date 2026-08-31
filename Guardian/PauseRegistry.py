@@ -2,7 +2,7 @@ import json
 import os
 import tempfile
 from datetime import datetime
-
+import psutil
 from Guardian.models.PausedProcess import PauseProcess
 
 
@@ -86,6 +86,7 @@ class PauseRegistry:
                     "name": process.name,
                     "pausedAt": process.pausedAt.isoformat(),
                     "reason": process.reason,
+                    "processStartTime": process.processStartTime,
                 }
                 for process in self.processes.values()
             ],
@@ -205,6 +206,9 @@ class PauseRegistry:
                 name = item.get("name")
                 pausedAt = item.get("pausedAt")
                 reason = item.get("reason")
+                processStartTime = item.get(
+                    "processStartTime"
+                )
 
                 if not isinstance(
                     pid,
@@ -230,6 +234,12 @@ class PauseRegistry:
                 ):
                     continue
 
+                if not isinstance(
+                    processStartTime,
+                    (int, float)
+                ):
+                    continue
+
                 try:
 
                     pausedAtValue = (
@@ -249,7 +259,10 @@ class PauseRegistry:
                     pid=pid,
                     name=name,
                     pausedAt=pausedAtValue,
-                    reason=reason
+                    reason=reason,
+                    processStartTime=float(
+                        processStartTime
+                    )
                 )
 
             self.processes = loaded
@@ -262,3 +275,31 @@ class PauseRegistry:
         ):
 
             self.processes = {}
+    def isSameProcess(self, pid: int) -> bool:
+
+        process = self.processes.get(pid)
+
+        if process is None:
+            return False
+
+        try:
+
+            current = psutil.Process(pid)
+
+            currentStartTime = current.create_time()
+
+            return (
+                abs(
+                    currentStartTime
+                    - process.processStartTime
+                )
+                < 0.001
+            )
+
+        except (
+            psutil.NoSuchProcess,
+            psutil.AccessDenied,
+            psutil.ZombieProcess
+        ):
+
+            return False
