@@ -7,6 +7,7 @@ class PauseProcess:
     name: str
     pausedAt: datetime
     reason: str
+    processStartTime: float
 
     def __str__(self)->str:
         return (
