@@ -97,7 +97,8 @@ def run_test():
             pid=pid,
             name=process.name(),
             pausedAt=pausedAt,
-            reason="RAM Critical"
+            reason="RAM Critical",
+            processStartTime=process.create_time()
         )
 
         assert registry.add(
