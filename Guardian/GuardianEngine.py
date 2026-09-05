@@ -93,6 +93,10 @@ class GuardianEngine:
 
         self.previousPressureState = pressure
 
+        resumedProcess = self.resumeCycle(
+            memory.ramPercent
+        )
+
         decision = (
             self.orchestrator.decisionEngine.decide(
                 pressure
@@ -110,7 +114,11 @@ class GuardianEngine:
         actionTaken = False
         actionReason = "No action required"
 
-        if decision:
+        if resumedProcess is not None:
+            actionTaken = True
+            actionReason = "Process resumed"
+
+        if decision and resumedProcess is None:
 
             if not self.interventionGuard.canIntervene():
 
@@ -140,7 +148,7 @@ class GuardianEngine:
 
                     if not (
                         self.orchestrator.pauseManager
-                        .canPause(candidate.pid)
+                        .canpause(candidate.pid)
                     ):
                         continue
 
@@ -180,6 +188,7 @@ class GuardianEngine:
             "actionTaken": actionTaken,
             "actionReason": actionReason,
             "pausedProcess": pausedProcess,
+            "resumedProcess": resumedProcess,
         }
 
     def resumeCycle(self, ramPercent):
