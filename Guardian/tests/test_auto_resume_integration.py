@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import time
+import tempfile
 from datetime import datetime
 
 import psutil
@@ -22,7 +23,9 @@ def run_test():
 
     pauseManager = PauseManager()
     resumeManager = ResumeManager()
-    registry = PauseRegistry()
+    registry = PauseRegistry(
+        stateFile=tempfile.gettempdir() + "/test_pause_registry.json"
+    )
     policy = ResumePolicy()
     history = EventHistory()
 
@@ -146,7 +149,7 @@ def run_test():
 
         print(
             f"Resume Threshold    : "
-            f"{policy.threshold()}%"
+            f"{policy.threshold}%"
         )
 
         assert policy.canResume(
