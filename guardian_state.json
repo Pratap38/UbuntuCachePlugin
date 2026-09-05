@@ -1,26 +1,4 @@
 {
   "version": 1,
-  "processes": [
-    {
-      "pid": 31046,
-      "name": "python",
-      "pausedAt": "2026-09-06T00:53:18.788897",
-      "reason": "RAM Critical",
-      "processStartTime": 1788636197.61
-    },
-    {
-      "pid": 31088,
-      "name": "python",
-      "pausedAt": "2026-09-06T00:53:30.011311",
-      "reason": "RAM Critical",
-      "processStartTime": 1788636208.83
-    },
-    {
-      "pid": 31104,
-      "name": "python",
-      "pausedAt": "2026-09-06T00:53:34.632408",
-      "reason": "RAM Critical",
-      "processStartTime": 1788636213.45
-    }
-  ]
+  "processes": []
 }

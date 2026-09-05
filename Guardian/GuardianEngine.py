@@ -3,17 +3,28 @@ from typing import Optional
 
 from Guardian.GuardianOrchestrator import GuardianOrchestrator
 from Guardian.models.PressureState import PressureState
+from Guardian.GuardianConfig import GuardianConfig
 
 from Guardian.InterventionGuard import InterventionGuard
 
-
+from Guardian.GuardianConfig import GuardianConfig
 class GuardianEngine:
 
     def __init__(
         self,
         orchestrator: Optional[GuardianOrchestrator] = None,
-        interval: float = 5.0,
+        interval: Optional[float] = None,
     ):
+
+        self.config = GuardianConfig()
+
+        configuredInterval = self.config.get(
+            "monitorInterval",
+            5.0
+        )
+
+        if interval is None:
+            interval = configuredInterval
 
         if interval <= 0:
             raise ValueError(
@@ -36,9 +47,9 @@ class GuardianEngine:
             self.orchestrator.notificationManager
         )
         self.interventionGuard = InterventionGuard(
-    cooldownSeconds=30.0,
-    maxInterventions=1
-)
+            cooldownSeconds=30.0,
+            maxInterventions=1
+        )
 
    
 
