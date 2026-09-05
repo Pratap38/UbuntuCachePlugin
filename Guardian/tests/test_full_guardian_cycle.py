@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import time
+from datetime import datetime
 
 import psutil
 
@@ -113,8 +114,9 @@ def run_test():
         record = PauseProcess(
             pid=pid,
             name=process.name(),
-            pausedAt=None,
-            reason="RAM Critical"
+            pausedAt=datetime.now(),
+            reason="RAM Critical",
+            processStartTime=process.create_time()
         )
 
         assert (

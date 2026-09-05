@@ -2,7 +2,7 @@ import time
 from typing import Optional
 
 from Guardian.GuardianOrchestrator import GuardianOrchestrator
-
+from Guardian.models.PressureState import PressureState
 
 from Guardian.InterventionGuard import InterventionGuard
 
@@ -29,6 +29,8 @@ class GuardianEngine:
         self.interval = interval
 
         self.running = False
+
+        self.previousPressureState = None
 
         self.notificationManager = (
             self.orchestrator.notificationManager
@@ -81,6 +83,15 @@ class GuardianEngine:
                 memory
             )
         )
+
+        if (
+            self.previousPressureState is not None
+            and pressure == PressureState.NORMAL
+            and self.previousPressureState != PressureState.NORMAL
+        ):
+            self.interventionGuard.reset()
+
+        self.previousPressureState = pressure
 
         decision = (
             self.orchestrator.decisionEngine.decide(
