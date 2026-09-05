@@ -95,6 +95,18 @@ class GuardianEngine:
             )
         )
 
+        if not self.config.get("enabled", True):
+            return {
+                "memory": memory,
+                "pressure": pressure,
+                "decision": False,
+                "notificationSent": False,
+                "actionTaken": False,
+                "actionReason": "Guardian disabled",
+                "pausedProcess": None,
+                "resumedProcess": None,
+            }
+
         if (
             self.previousPressureState is not None
             and pressure == PressureState.NORMAL
