@@ -13,8 +13,10 @@ from Guardian.models.PausedProcess import PauseProcess
 from datetime import datetime
 from Guardian.models.GuardianEvent import GuardianEvent
 from Guardian.ResumeCandidateSelector import ResumeCandidateSelector
+from Guardian.GuardianConfig import GuardianConfig
 class GuardianOrchestrator:
     def __init__(self):
+        self.config = GuardianConfig()
         self.ramMonitor=RamMonitor()
 
         self.pressureCheck=MemoryPressureCheck()
@@ -114,21 +116,22 @@ class GuardianOrchestrator:
             ramPercent=ramPercent
         )
 
-        if not self.eventHistory.add(
-            event
-        ):
-            self.pauseRegistry.remove(
-                process.pid
-            )
-
-            try:
-                self.resumeManager.resume(
+        if self.config.get("logEvents", True):
+            if not self.eventHistory.add(
+                event
+            ):
+                self.pauseRegistry.remove(
                     process.pid
                 )
-            except Exception:
-                pass
 
-            return False
+                try:
+                    self.resumeManager.resume(
+                        process.pid
+                    )
+                except Exception:
+                    pass
+
+                return False
 
         return True
 
