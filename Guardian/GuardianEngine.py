@@ -116,9 +116,12 @@ class GuardianEngine:
 
         self.previousPressureState = pressure
 
-        resumedProcess = self.resumeCycle(
-            memory.ramPercent
-        )
+        resumedProcess = None
+
+        if self.config.get("autoResume", True):
+            resumedProcess = self.resumeCycle(
+                memory.ramPercent
+            )
 
         decision = (
             self.orchestrator.decisionEngine.decide(
