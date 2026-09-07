@@ -104,16 +104,19 @@
 import subprocess
 
 from Guardian.models.PressureState import PressureState
+from Guardian.GuardianConfig import GuardianConfig
 
 
 class NotificationManager:
 
     def __init__(
         self,
-        earlyThreshold: float = 85.0
+        earlyThreshold: float = 85.0,
+        
     ):
 
         self.earlyThreshold = earlyThreshold
+        self.config = GuardianConfig()
 
         self.earlyWarningSent = False
         self.warningSent = False
@@ -128,6 +131,9 @@ class NotificationManager:
         message: str,
         urgency: str = "normal"
     ) -> bool:
+
+        if not self.config.get("desktopNotifications", True):
+            return False
 
         try:
 
