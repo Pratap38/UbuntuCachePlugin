@@ -1,8 +1,11 @@
+import os
 import subprocess
 import sys
+import tempfile
 
 from Guardian.GuardianConfig import GuardianConfig
 from Guardian.GuardianOrchestrator import GuardianOrchestrator
+from Guardian.PauseRegistry import PauseRegistry
 from Guardian.models.ProcessInfo import ProcessInfo
 
 
@@ -15,6 +18,11 @@ originalValue = config.get("logEvents", True)
 
 child = None
 pid = None
+
+tempRegistryPath = os.path.join(
+    tempfile.gettempdir(),
+    f"test_log_events_registry_{os.getpid()}.json"
+)
 
 try:
 
@@ -46,6 +54,17 @@ try:
     print()
 
     orchestrator = GuardianOrchestrator()
+
+    # Isolate this test from the shared production
+    # guardian_state.json so stale PIDs from this run
+    # can never pollute later tests (e.g. resume
+    # candidate selection in other test files).
+    orchestrator.pauseRegistry = PauseRegistry(
+        stateFile=tempRegistryPath
+    )
+    orchestrator.resumeCandidateSelector.pauseRegistry = (
+        orchestrator.pauseRegistry
+    )
 
     import psutil
 
@@ -155,6 +174,12 @@ finally:
                 child.wait(timeout=3)
         except Exception:
             pass
+
+    try:
+        if os.path.exists(tempRegistryPath):
+            os.remove(tempRegistryPath)
+    except OSError:
+        pass
 
     config.set("logEvents", originalValue)
     config.update()

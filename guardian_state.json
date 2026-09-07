@@ -1,19 +1,4 @@
 {
   "version": 1,
-  "processes": [
-    {
-      "pid": 40206,
-      "name": "python3",
-      "pausedAt": "2026-09-08T00:10:07.511477",
-      "reason": "Log Events Disabled Test",
-      "processStartTime": 1788806407.33
-    },
-    {
-      "pid": 40400,
-      "name": "python3",
-      "pausedAt": "2026-09-08T00:10:55.068443",
-      "reason": "Log Events Disabled Test",
-      "processStartTime": 1788806454.89
-    }
-  ]
+  "processes": []
 }
