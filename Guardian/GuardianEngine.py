@@ -141,7 +141,11 @@ class GuardianEngine:
             actionTaken = True
             actionReason = "Process resumed"
 
-        if decision and resumedProcess is None:
+        if (
+    decision
+    and resumedProcess is None
+    and self.config.get("autoPause", True)
+):
 
             if not self.interventionGuard.canIntervene():
 
