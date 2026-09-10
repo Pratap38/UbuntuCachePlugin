@@ -1,7 +1,6 @@
 
 
 import json
-
 from Guardian.GuardianPaths import GuardianPaths
 
 class GuardianConfig:
