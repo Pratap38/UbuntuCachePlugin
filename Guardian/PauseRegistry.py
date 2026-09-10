@@ -2,16 +2,21 @@ import json
 import os
 import tempfile
 from datetime import datetime
+from pathlib import Path
 import psutil
 from Guardian.models.PausedProcess import PauseProcess
+from Guardian.GuardianPaths import GuardianPaths
 
 
 class PauseRegistry:
 
-    def __init__(self, stateFile: str = "guardian_state.json"):
+    def __init__(self, stateFile: str | None = None):
+
+        if stateFile is None:
+            stateFile = str(GuardianPaths.stateFile())
 
         self.processes: dict[int, PauseProcess] = {}
-        self.stateFile = stateFile
+        self.stateFile = Path(stateFile)
 
         self._load()
 
