@@ -1,8 +1,8 @@
 
 
 import json
-from pathlib import Path
 
+from Guardian.GuardianPaths import GuardianPaths
 
 class GuardianConfig:
 
@@ -48,15 +48,7 @@ class GuardianConfig:
 
     def __init__(self):
 
-        self.configPath = (
-
-            Path(__file__).parent
-
-            / "config"
-
-            / "guardian_config.json"
-
-        )
+        self.configPath = GuardianPaths.configFile()
 
         self.config = {}
 
@@ -98,31 +90,23 @@ class GuardianConfig:
     # -----------------------------------------------------
 
     def save(self):
-        """
-        Save configuration to JSON.
-        """
+        self.configPath.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
 
         with open(
-
             self.configPath,
-
             "w",
-
             encoding="utf-8"
-
         ) as file:
-
             json.dump(
-
                 self.config,
-
                 file,
-
                 indent=4
-
             )
 
-    # -----------------------------------------------------
+        # -----------------------------------------------------
 
     def get(
 
