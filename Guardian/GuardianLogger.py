@@ -1,26 +1,15 @@
 from pathlib import Path
 from datetime import datetime
+from Guardian.GuardianPaths import GuardianPaths
 
 class GuardLogManager:
     def __init__(self):
 
-        self.logDirectory = (
+        self.logFile = GuardianPaths.logFile()
 
-            Path(__file__).parent
+        self.logFile.parent.mkdir(
 
-            / "logs"
-
-        )
-
-        self.logFile = (
-
-            self.logDirectory
-
-            / "guardian.log"
-
-        )
-
-        self.logDirectory.mkdir(
+            parents=True,
 
             exist_ok=True
 
