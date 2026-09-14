@@ -1,4 +1,12 @@
 Guardian
+Scanner
 cleaner
 cli
-tests
+config
+core
+gnome-extension
+logs
+reports
+scanner
+ui
+venv

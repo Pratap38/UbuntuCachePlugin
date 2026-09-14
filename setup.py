@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 setup(
     name="Baker",
@@ -8,7 +8,14 @@ setup(
 
     description="Professional Ubuntu Cache Cleaning Utility",
 
-    packages=find_packages(),
+    packages=find_namespace_packages(
+        exclude=[
+            "tests",
+            "tests.*",
+            "Guardian.tests",
+            "Guardian.tests.*",
+        ]
+    ),
 
     include_package_data=True,
 
@@ -18,7 +25,8 @@ setup(
 
         "textual",
 
-        "plotext"
+        "plotext",
+        "psutil"
 
     ],
 
