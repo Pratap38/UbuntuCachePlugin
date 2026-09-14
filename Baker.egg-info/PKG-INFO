@@ -3,9 +3,11 @@ Name: Baker
 Version: 1.0.0
 Summary: Professional Ubuntu Cache Cleaning Utility
 Author: Pratap
+License-File: LICENSE
 Requires-Dist: rich
 Requires-Dist: textual
 Requires-Dist: plotext
 Dynamic: author
+Dynamic: license-file
 Dynamic: requires-dist
 Dynamic: summary
