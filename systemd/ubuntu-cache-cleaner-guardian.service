@@ -4,8 +4,8 @@ After=graphical-session.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/pratap/Desktop/UbuntuCacheCLeaner
-ExecStart=/home/pratap/Desktop/UbuntuCacheCLeaner/venv/bin/python3 -m Guardian.GuardianDaemon
+WorkingDirectory=@PROJECT_ROOT@
+ExecStart=@PYTHON_EXECUTABLE@ -m Guardian.GuardianDaemon
 Restart=on-failure
 RestartSec=5
 

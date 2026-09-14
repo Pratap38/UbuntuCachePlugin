@@ -1,0 +1,13 @@
+Guardian
+Scanner
+cleaner
+cli
+config
+core
+gnome-extension
+logs
+reports
+scanner
+systemd
+ui
+venv

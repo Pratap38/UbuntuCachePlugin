@@ -1,5 +1,4 @@
 rich
 textual
-psutil
 plotext
-
+psutil

@@ -51,7 +51,7 @@ SYSTEMD_USER_DIR="$HOME/.config/systemd/user"
 
 rm -f "$SYSTEMD_USER_DIR/ubuntu-cache-cleaner-guardian.service"
 
-systemctl --user daemon-reload
+systemctl --user daemon-reload || true
 
 echo ""
 echo "Removing RAM Guardian runtime files..."

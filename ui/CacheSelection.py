@@ -4,11 +4,13 @@ from textual.widgets import Footer
 from textual.widgets import Checkbox
 from textual.widgets import Button
 from textual.widgets import Select
+from textual.widgets import Static
 from textual.containers import Vertical
 
 from ui.CleanScreen import CleaningScreen
 from core.CleaningPreset import CleaningPreset
 from core.ConfigManager import ConfigManager
+from core.GuardianStatus import GuardianStatus
 
 
 class CacheSelectionScreen(App):
@@ -57,6 +59,11 @@ class CacheSelectionScreen(App):
     def compose(self):
 
         yield Header()
+
+        yield Static(
+            f"RAM Guardian: {GuardianStatus().check()}",
+            id="guardian_status"
+        )
 
         yield Vertical(
 
