@@ -7,6 +7,7 @@ License-File: LICENSE
 Requires-Dist: rich
 Requires-Dist: textual
 Requires-Dist: plotext
+Requires-Dist: psutil
 Dynamic: author
 Dynamic: license-file
 Dynamic: requires-dist
