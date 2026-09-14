@@ -1,0 +1,13 @@
+[Unit]
+Description=Ubuntu Cache Cleaner RAM Guardian
+After=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pratap/Desktop/UbuntuCacheCLeaner
+ExecStart=/home/pratap/Desktop/UbuntuCacheCLeaner/venv/bin/python3 -m Guardian.GuardianDaemon
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
