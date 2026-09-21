@@ -126,7 +126,7 @@ class ReportScreen(Screen):
 
                 # Use analyze() if you renamed it.
                 # If not, replace analyze with analazye.
-                warnings = detectionEngine.analyze(
+                warnings = detectionEngine.analazye(
 
                     scanResults
 
