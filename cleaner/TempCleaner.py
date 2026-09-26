@@ -7,7 +7,7 @@ from core.logger import logger
 TEMP_PATH = "/tmp"
 MIN_FILE_AGE = 60 * 60  
 
-def cleantempFile():
+def cleanTempFiles():
     deleted=0
     failed=0
     skipped=0
