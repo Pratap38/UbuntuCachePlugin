@@ -9,7 +9,7 @@ def cleanBrowserCache():
 
     for browser,path in BrowserCachePaths.items():
         expandPath=os.path.expanduser(path)
-        if not os.path.expanduser(path):
+        if not os.path.exists(expandPath):
             logger.warning(f"{browser}cache not found:")
             continue
         try:
@@ -18,10 +18,13 @@ def cleanBrowserCache():
                     expandPath,
                     item
                 )
-                if os.listdir(itemPath):
-                    DeleteFolder(itemPath)
-                else:
-                    DeleteFile(itemPath) 
+                try:
+                    if os.path.isdir(itemPath):
+                        DeleteFolder(itemPath)
+                    else:
+                        DeleteFile(itemPath)
+                except Exception as e:
+                    logger.error(f"{browser}error  failed to clean item {itemPath}: {e}")
             cleanCount+=1
         except Exception as e:
             logger.error(f"{browser}error  failed to clean {e}")
