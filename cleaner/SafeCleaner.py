@@ -9,15 +9,35 @@ from core.Errorrecover import recoverymanager
 
 def isSafePaths(path):
 
-    expandPath = os.path.abspath(
-        os.path.expanduser(path)
-    )
+    try:
+
+        expandPath = os.path.realpath(
+            os.path.abspath(
+                os.path.expanduser(path)
+            )
+        )
+
+    except (OSError, ValueError):
+
+        return False
 
     for safePath in Expanded_SafePaths:
 
-        if expandPath.startswith(safePath):
+        realSafePath = os.path.realpath(safePath)
 
-            return True
+        try:
+
+            if os.path.commonpath(
+                [expandPath, realSafePath]
+            ) == realSafePath:
+
+                return True
+
+        except ValueError:
+
+            # raised when the paths cannot be compared
+            # (e.g. different drives) - treat as not contained
+            continue
 
     return False
 
