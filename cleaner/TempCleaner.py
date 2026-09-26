@@ -14,7 +14,7 @@ def cleanTempFiles():
 
     try:
         now=time.time()
-        for name in os.listdr(TEMP_PATH):
+        for name in os.listdir(TEMP_PATH):
             path=os.path.join(TEMP_PATH,name)
             try:
                 if os.path.islink(path):
