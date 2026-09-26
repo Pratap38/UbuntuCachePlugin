@@ -57,11 +57,10 @@ BrowserCachePaths={
 }
 
 
-
 SAFE_DELETE_PATHS = [
-
     "~/.cache",
     "/var/cache/apt",
+    "/tmp",
     "/home/pratap/Desktop/UbuntuCacheCLeaner/tests",
     "~/.cache/thumbnails",
     "~/.local/share/Trash/files",

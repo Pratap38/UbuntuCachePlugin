@@ -2,7 +2,7 @@ from cleaner.BrowserClean import cleanBrowserCache
 from cleaner.Thumbnailcleaner import cleanThumbnailCache
 from cleaner.AptCleaner import CleanaptCheck
 from cleaner.ThrashCleaner import cleanThrash
-# from cleaner.TempCleaner import cleanTempFiles
+from cleaner.TempCleaner import cleanTempFiles
 
 from core.RecoveryLogger import RecoveryLogger
 
@@ -30,7 +30,7 @@ cleaners = {
 
     "APT Cache": CleanaptCheck,
 
-    # "Temp Files": cleanTempFiles,
+    "Temp Files": cleanTempFiles,
 
     "Browser Cache": cleanBrowserCache,
 
