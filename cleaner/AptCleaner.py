@@ -25,6 +25,7 @@ def CleanaptCheck():
         else:
             logger.error(f"apt failed {result.stderr}")
             print("APt clean Falied")
+            return False
     except Exception as e:
         logger.error(f"apte crahsed {e}")
         return False
