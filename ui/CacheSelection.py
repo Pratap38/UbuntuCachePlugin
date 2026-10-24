@@ -12,7 +12,7 @@ from core.CleaningPreset import CleaningPreset
 from core.ConfigManager import ConfigManager
 from core.GuardianStatus import GuardianStatus
 
-
+from ui.ConfirmCleaningScreen import ConfirmCleaningScreen
 class CacheSelectionScreen(App):
 
     CSS = """
@@ -256,14 +256,91 @@ class CacheSelectionScreen(App):
                 "Trash"
             )
 
-        self.push_screen(
+        if not selectedCaches:
 
-            CleaningScreen(
-
-                selectedCaches
-
+            self.notify(
+                "Please select at least one cache category.",
+                severity="warning"
             )
 
+            return
+
+        self.push_screen(
+
+            ConfirmCleaningScreen(selectedCaches),
+
+            callback=self.handle_confirmation
+
+        )
+
+    def handle_confirmation(self, confirmed):
+
+        if confirmed is not True:
+
+            return
+
+        selectedCaches = []
+
+        if self.query_one(
+            "#user_cache",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "User Cache"
+            )
+
+        if self.query_one(
+            "#apt_cache",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "APT Cache"
+            )
+
+        if self.query_one(
+            "#temp_files",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Temp Files"
+            )
+
+        if self.query_one(
+            "#thumbnail",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Thumbnail Cache"
+            )
+
+        if self.query_one(
+            "#browser",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Browser Cache"
+            )
+
+        if self.query_one(
+            "#trash",
+            Checkbox
+        ).value:
+
+            selectedCaches.append(
+                "Trash"
+            )
+
+        if not selectedCaches:
+
+            return
+
+        self.push_screen(
+            CleaningScreen(selectedCaches)
         )
 
 
