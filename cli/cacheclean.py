@@ -1,5 +1,6 @@
 import sys
 import os
+import argparse
 
 sys.path.insert(
 
@@ -24,36 +25,75 @@ from core.EnvironmentChecker import EnvironmentChecker
 from core.CrashLogger import CrashLogger
 
 
-def main():
+def parseArgs(argv=None):
 
-    checker = EnvironmentChecker()
+    parser = argparse.ArgumentParser(
 
-    warnings = checker.check()
+        prog="cacheclean",
 
-    if warnings:
+        description="Professional Ubuntu Cache Cleaning Utility"
 
-        print("\nEnvironment Check\n")
+    )
 
-        for warning in warnings:
+    parser.add_argument(
 
-            print(
+        "--version",
 
-                f"Warning : {warning}"
+        action="store_true",
 
-            )
+        help="Show the installed version and exit"
 
-        print()
+    )
 
-    app = CacheSelectionScreen()
-
-    app.run()
+    return parser.parse_args(argv)
 
 
-if __name__ == "__main__":
+def printVersion():
 
     try:
 
-        main()
+        from importlib.metadata import version, PackageNotFoundError
+
+        print(f"cacheclean {version('Baker')}")
+
+    except PackageNotFoundError:
+
+        print("cacheclean version unknown (package not installed)")
+
+
+def main():
+
+    try:
+
+        args = parseArgs()
+
+        if args.version:
+
+            printVersion()
+
+            return
+
+        checker = EnvironmentChecker()
+
+        warnings = checker.check()
+
+        if warnings:
+
+            print("\nEnvironment Check\n")
+
+            for warning in warnings:
+
+                print(
+
+                    f"Warning : {warning}"
+
+                )
+
+            print()
+
+        app = CacheSelectionScreen()
+
+        app.run()
 
     except Exception as e:
 
@@ -74,3 +114,10 @@ if __name__ == "__main__":
             "Crash information has been saved to logs/crash.log"
 
         )
+
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+
+    main()
