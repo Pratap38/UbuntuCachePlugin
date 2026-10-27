@@ -22,6 +22,8 @@ def cleanThumbnailCache():
 
     try:
 
+        failedcount = 0
+
         for item in os.listdir(thumbnailPath):
 
             itemPath = os.path.join(
@@ -31,11 +33,15 @@ def cleanThumbnailCache():
 
             if os.path.isdir(itemPath):
 
-                DeleteFolder(itemPath)
+                if not DeleteFolder(itemPath):
+
+                    failedcount += 1
 
             else:
 
-                DeleteFile(itemPath)
+                if not DeleteFile(itemPath):
+
+                    failedcount += 1
 
         logger.info(
             "Thumbnail cache cleaned successfully"
@@ -45,7 +51,7 @@ def cleanThumbnailCache():
             "Thumbnail cache cleaned successfully"
         )
 
-        return True
+        return failedcount == 0
 
     except Exception as e:
 

@@ -104,8 +104,10 @@ def test_one_browser_failure_does_not_stop_another(tmp_path, monkeypatch):
 
     try:
         # cleanBrowserCache's outer try/except must swallow the listdir
-        # failure for "Broken" and keep going to "Healthy".
-        assert BrowserClean.cleanBrowserCache() is True
+        # failure for "Broken" and keep going to "Healthy" - but the overall
+        # result must honestly reflect that "Broken" failed, not silently
+        # report True just because some other browser succeeded.
+        assert BrowserClean.cleanBrowserCache() is False
         assert list(healthy_dir.iterdir()) == []
     finally:
         broken_dir.chmod(original_mode)
@@ -133,6 +135,25 @@ def test_file_and_directory_deletion_use_safe_cleaner(tmp_path, monkeypatch):
 
     assert not file_item.exists()
     assert not dir_item.exists()
+
+
+def test_blocked_deletion_is_reported_as_false(tmp_path, monkeypatch):
+    """A file SafeCleaner refuses to delete (path not approved) must make
+    cleanBrowserCache() report False, not silently report True."""
+    browser_dir = tmp_path / "browser"
+    browser_dir.mkdir()
+    file_item = browser_dir / "file.tmp"
+    file_item.write_text("data")
+
+    monkeypatch.setattr(
+        BrowserClean, "BrowserCachePaths", {"Chrome": str(browser_dir)}
+    )
+    other = tmp_path / "unrelated"
+    other.mkdir()
+    _approve(monkeypatch, other)
+
+    assert BrowserClean.cleanBrowserCache() is False
+    assert file_item.exists()
 
 
 def test_deletion_is_blocked_when_path_not_approved(tmp_path, monkeypatch):

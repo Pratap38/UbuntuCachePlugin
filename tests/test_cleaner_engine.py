@@ -71,3 +71,15 @@ def test_mixed_known_and_unknown_selection(monkeypatch):
     results = CleanerEngine.cleanSelectedCache(["Temp Files", "Unknown Cache"])
 
     assert results == {"Temp Files": True, "Unknown Cache": False}
+
+
+def test_none_result_is_coerced_to_false(monkeypatch):
+    """A cleaner that returns None (e.g. a regression like AptCleaner's old
+    fall-through bug) must not poison the results dict with a non-bool value
+    - sum(results.values()) in ui/CleanScreen.py would crash on a real None."""
+    monkeypatch.setitem(CleanerEngine.cleaners, "Temp Files", lambda: None)
+
+    results = CleanerEngine.cleanSelectedCache(["Temp Files"])
+
+    assert results == {"Temp Files": False}
+    assert sum(results.values()) == 0  # proves no TypeError on aggregation

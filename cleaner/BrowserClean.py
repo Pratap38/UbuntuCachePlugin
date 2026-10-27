@@ -5,6 +5,7 @@ from core.constants import BrowserCachePaths
 
 def cleanBrowserCache():
     cleanCount=0
+    failedcount=0
     logger.info("Starting Browser Clean ")
 
     for browser,path in BrowserCachePaths.items():
@@ -20,14 +21,18 @@ def cleanBrowserCache():
                 )
                 try:
                     if os.path.isdir(itemPath):
-                        DeleteFolder(itemPath)
+                        if not DeleteFolder(itemPath):
+                            failedcount+=1
                     else:
-                        DeleteFile(itemPath)
+                        if not DeleteFile(itemPath):
+                            failedcount+=1
                 except Exception as e:
+                    failedcount+=1
                     logger.error(f"{browser}error  failed to clean item {itemPath}: {e}")
             cleanCount+=1
         except Exception as e:
+            failedcount+=1
             logger.error(f"{browser}error  failed to clean {e}")
     print(f"{cleanCount} number of browser cache is been ccleaned" )
-    return True
+    return failedcount == 0
             

@@ -58,3 +58,20 @@ def test_missing_thumbnail_cache_is_skipped_without_crash(tmp_path, monkeypatch)
 
     assert cleanThumbnailCache() is False
     assert not missing.exists()
+
+
+def test_partial_failure_is_reported_as_false(tmp_path, monkeypatch):
+    """A file SafeCleaner refuses to delete (outside the approved path) must
+    make cleanThumbnailCache() report False, not silently report True."""
+    cache_dir = tmp_path / "thumbnails"
+    cache_dir.mkdir()
+    _redirect_thumbnail_path(monkeypatch, cache_dir)
+
+    (cache_dir / "thumb1.png").write_text("data")
+
+    monkeypatch.setattr(
+        SafeCleaner, "Expanded_SafePaths", [str(tmp_path / "unrelated")]
+    )
+
+    assert cleanThumbnailCache() is False
+    assert (cache_dir / "thumb1.png").exists()

@@ -13,6 +13,7 @@ def cleanThrash():
         print("the thrash is been not founded")
         return False
     deletecount=0
+    failedcount=0
     try:
         for item in os.listdir(trashpath):
             itemPath=os.path.join(
@@ -22,12 +23,16 @@ def cleanThrash():
             if os.path.isdir(itemPath):
                 if DeleteFolder(itemPath):
                     deletecount+=1
+                else:
+                    failedcount+=1
             else:
                 if DeleteFile(itemPath):
                     deletecount+=1
+                else:
+                    failedcount+=1
         logger.info(f"Deleted {deletecount} trash deleter")
         print(f"The total trash deleter{deletecount}")
-        return True
+        return failedcount == 0
     except Exception as e:
         logger.error(f"the cleaning is failed {e}")
         return False

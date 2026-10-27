@@ -55,3 +55,23 @@ def test_missing_trash_is_skipped_without_crash(tmp_path, monkeypatch):
 
     assert cleanThrash() is False
     assert not missing.exists()
+
+
+def test_partial_failure_is_reported_as_false(tmp_path, monkeypatch):
+    """A file SafeCleaner refuses to delete (outside the approved path) must
+    make cleanThrash() report False, not silently report True."""
+    trash_dir = tmp_path / "trash"
+    trash_dir.mkdir()
+    _redirect_trash_path(monkeypatch, trash_dir)
+
+    (trash_dir / "deletable.txt").write_text("data")
+
+    # Narrow the approved safe path to a different directory so SafeCleaner
+    # blocks deletion inside trash_dir, simulating a real per-item failure.
+    monkeypatch.setattr(
+        SafeCleaner, "Expanded_SafePaths", [str(tmp_path / "unrelated")]
+    )
+
+    assert cleanThrash() is False
+    # The blocked file must still be present - SafeCleaner refused it.
+    assert (trash_dir / "deletable.txt").exists()

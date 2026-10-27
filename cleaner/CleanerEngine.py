@@ -59,6 +59,8 @@ def cleanSelectedCache(selectedCache):
 
                 result = cleaner()
 
+                result = bool(result)
+
                 results[cache] = result
 
                 if result:
